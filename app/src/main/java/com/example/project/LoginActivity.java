@@ -21,11 +21,17 @@ public class LoginActivity extends AppCompatActivity {
         password = (EditText) findViewById(R.id.password);
         login_btn = (Button) findViewById(R.id.login_btn);
 
+        Administrator admin = new Administrator("admin", "admin123");
+
         login_btn.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        // login as admin
+                        if (admin.login(username.getText().toString(), password.getText().toString())) {
+                            setContentView(R.layout.activity_admin);
+
+                        }
+
                     }
                 }
         );
