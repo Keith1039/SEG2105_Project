@@ -2,6 +2,7 @@ package com.example.project;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -29,7 +30,8 @@ public class LoginActivity extends AppCompatActivity {
                     public void onClick(View view) {
                         if (admin.login(username.getText().toString(), password.getText().toString())) {
                             setContentView(R.layout.activity_admin);
-
+                            Intent intent = new Intent(LoginActivity.this, AdminActivity.class);
+                            startActivity(intent);
                         }
 
                     }
