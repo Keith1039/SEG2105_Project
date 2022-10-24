@@ -2,24 +2,26 @@ package com.example.project;
 
 public class Administrator extends User {
 
-    public Administrator(String username, String password) {
-        super(username, password);
+    public Administrator() {
+        super("admin", "admin123");
     }
 
-    private Course createCourse(String code, String name) {
+    private void createCourse(String code, String name) {
         Course course = new Course(code, name);
-        // add course to database
-        return course;
+        // This method only creates the course
+        // add to database
+        return;
     }
 
     private void editCourse(String oldCode, String newCode, String newName) {
         // use oldCode (current course code) to find Course from database
         // course.setCode(newCode);
         // course.setName(newName);
+        // update database
         return;
     }
 
-    private void deleteCourse(String code, String name) {
+    private void deleteCourse(String code) {
         // find Course using code (current course code)
         // remove Course from database
         return;

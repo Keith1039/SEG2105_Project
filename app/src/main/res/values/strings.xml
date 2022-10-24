@@ -8,4 +8,6 @@
     <string name="admin_welcome">Welcome, Admin!</string>
     <string name="view_courses">View Courses</string>
     <string name="create_course">Create Course</string>
+    <string name="admin_login_btn">Login as Admin</string>
+    <string name="delete_user">Delete User</string>
 </resources>

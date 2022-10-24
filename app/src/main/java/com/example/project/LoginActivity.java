@@ -11,7 +11,7 @@ import android.widget.EditText;
 public class LoginActivity extends AppCompatActivity {
     EditText username;
     EditText password;
-    Button login_btn;
+    Button admin_login_btn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,16 +20,25 @@ public class LoginActivity extends AppCompatActivity {
 
         username = (EditText) findViewById(R.id.username);
         password = (EditText) findViewById(R.id.password);
-        login_btn = (Button) findViewById(R.id.login_btn);
+        admin_login_btn = (Button) findViewById(R.id.admin_login_btn);
 
-        Administrator admin = new Administrator("admin", "admin123");
+        // user: admin
+        // pass: admin123
+        Administrator admin = new Administrator();
 
-        login_btn.setOnClickListener(
+        // Later we will add a universal login button to fetch a user from database using username
+        // Then use user.login(user, pass) to validate user
+        // If login is successful, start the corresponding activity
+        // For now, we only have AdminActivity
+        admin_login_btn.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        // Validate admin login
+                        // There is only 1 admin so no need to communicate with database
                         if (admin.login(username.getText().toString(), password.getText().toString())) {
-                            setContentView(R.layout.activity_admin);
+
+                            // Starts the AdminActivity
                             Intent intent = new Intent(LoginActivity.this, AdminActivity.class);
                             startActivity(intent);
                         }
