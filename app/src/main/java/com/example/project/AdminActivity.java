@@ -143,6 +143,14 @@ public class AdminActivity extends AppCompatActivity {
                         // setContentView(R.layout.edit_course);
                         // which hasn't been made yet
                         // admin.editCourse(oldCode, newCode, newName);
+
+                        String oldCID = data_id.getText().toString();
+                        setContentView(R.layout.edit_course);
+
+
+
+
+
                     }
                 }
         );

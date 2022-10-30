@@ -85,6 +85,15 @@ public class DBHandler  extends SQLiteOpenHelper {
         sqLiteDatabase.close();
     }
 
+    public void editCourse(String oldCID, String newCID){
+        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+
+        String query = "UPDATE "+ COURSE_TABLE_NAME + " SET " + COLUMN_COURSE_CODE + " = \"" + newCID + "\"" + "WHERE " + COLUMN_COURSE_CODE + "= \"" + oldCID + "\"";
+        Cursor cursor = sqLiteDatabase.rawQuery(query, null);
+
+
+    }
+
     //add a new course in the table courses in the data base
     public void addCourse(Course course) {
 

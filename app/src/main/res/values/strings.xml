@@ -10,4 +10,11 @@
     <string name="create_course">Create Course</string>
     <string name="admin_login_btn">Login as Admin</string>
     <string name="delete_user">Delete User</string>
+    <string name="enter_new_course_id">Enter New Course ID</string>
+    <string name="enter_new_course_name">Enter New Course Name</string>
+    <string name="done">Done</string>
+    <string name="textview">TextView</string>
+    <string name="new_course_id">New Course ID</string>
+    <string name="new_course_name">New Course Name</string>
+    <string name="update_course">update course</string>
 </resources>
