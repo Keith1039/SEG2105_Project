@@ -71,6 +71,20 @@ public class DBHandler  extends SQLiteOpenHelper {
         return sqLiteDatabase.rawQuery(query, null);
     }
 
+    //add a new user in the table users in the data base
+    public void addUsers(User user) {
+
+        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+
+        values.put(COLUMN_ID,user.getUsername());
+        values.put(COLUMN_PASSWORD, user.getPassword());
+
+        sqLiteDatabase.insert(USER_TABLE_NAME, null, values);
+        sqLiteDatabase.close();
+    }
+
     //add a new course in the table courses in the data base
     public void addCourse(Course course) {
 
