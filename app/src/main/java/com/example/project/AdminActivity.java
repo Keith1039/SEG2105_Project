@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.database.Cursor;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -145,11 +146,27 @@ public class AdminActivity extends AppCompatActivity {
                         // admin.editCourse(oldCode, newCode, newName);
 
                         String oldCID = data_id.getText().toString();
+                        Log.d("Old ID: ", oldCID);
                         setContentView(R.layout.edit_course);
 
+                        Button done = (Button) findViewById(R.id.updateCourse);
+                        EditText newCID = (EditText) findViewById(R.id.newCID);
+                        EditText newCName = (EditText) findViewById(R.id.newCName);
 
 
 
+                        done.setOnClickListener(
+                                new View.OnClickListener() {
+                                    public void onClick(View view){
+                                        String newID = newCID.getText().toString();
+                                        String newName = newCName.getText().toString();
+
+                                        Log.d("New ID", newID);
+                                        Log.d("New Name", newName);
+                                        edit_course(oldCID, newID, newName);
+                                    }
+                                }
+                        );
 
                     }
                 }
@@ -201,6 +218,15 @@ public class AdminActivity extends AppCompatActivity {
         adapter = new ArrayAdapter<> (this, android.R.layout.simple_list_item_1, data_List);
         data_ListView.setAdapter(adapter);
     }
+
+    public void edit_course(String oldCID, String newID, String newName){
+        dbHandler.editCourse(oldCID, newID, newName);
+
+        setContentView(R.layout.activity_admin);
+    }
+
+
+
     private void viewUsers() {
 
         data_List.clear();
