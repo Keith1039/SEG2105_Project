@@ -2,6 +2,8 @@ package com.example.project;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,9 +14,10 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class AdminActivity extends AppCompatActivity {
+public class AdminActivity extends AppCompatActivity implements Serializable {
 
     EditText data_id, data_name;
     ListView data_ListView ;
@@ -30,6 +33,8 @@ public class AdminActivity extends AppCompatActivity {
     ArrayList<String> data_List;
     ArrayAdapter adapter;
     DBHandler dbHandler;
+
+    public static final String REQUEST_RESULT = "REQUEST_RESULT";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -132,6 +137,8 @@ public class AdminActivity extends AppCompatActivity {
                 }
         );
 
+
+
         // Edit an existing course
         edit_course.setOnClickListener(
                 new View.OnClickListener() {
@@ -146,31 +153,16 @@ public class AdminActivity extends AppCompatActivity {
                         // admin.editCourse(oldCode, newCode, newName);
 
                         String oldCID = data_id.getText().toString();
-                        Log.d("Old ID: ", oldCID);
+
+                        Intent send = new Intent(AdminActivity.this, EditCourse.class);
+                        send.putExtra("OldID", oldCID);
+
                         setContentView(R.layout.edit_course);
-
-                        Button done = (Button) findViewById(R.id.updateCourse);
-                        EditText newCID = (EditText) findViewById(R.id.newCID);
-                        EditText newCName = (EditText) findViewById(R.id.newCName);
-
-
-
-                        done.setOnClickListener(
-                                new View.OnClickListener() {
-                                    public void onClick(View view){
-                                        String newID = newCID.getText().toString();
-                                        String newName = newCName.getText().toString();
-
-                                        Log.d("New ID", newID);
-                                        Log.d("New Name", newName);
-                                        edit_course(oldCID, newID, newName);
-                                    }
-                                }
-                        );
-
                     }
                 }
         );
+
+
 
         // Delete an existing course
         delete_course.setOnClickListener(
@@ -202,6 +194,7 @@ public class AdminActivity extends AppCompatActivity {
                 }
         );
     }
+
 
     private void viewCourses() {
 
