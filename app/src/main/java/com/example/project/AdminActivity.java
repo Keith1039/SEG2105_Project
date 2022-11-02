@@ -34,7 +34,6 @@ public class AdminActivity extends AppCompatActivity implements Serializable {
     ArrayAdapter adapter;
     DBHandler dbHandler;
 
-    public static final String REQUEST_RESULT = "REQUEST_RESULT";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -154,10 +153,9 @@ public class AdminActivity extends AppCompatActivity implements Serializable {
 
                         String oldCID = data_id.getText().toString();
 
-                        Intent send = new Intent(AdminActivity.this, EditCourse.class);
-                        send.putExtra("OldID", oldCID);
-
-                        setContentView(R.layout.edit_course);
+                        Intent intent = new Intent(AdminActivity.this, EditCourse.class);
+                        intent.putExtra("OldID", oldCID);
+                        startActivity(intent);
                     }
                 }
         );
@@ -212,13 +210,6 @@ public class AdminActivity extends AppCompatActivity implements Serializable {
         data_ListView.setAdapter(adapter);
     }
 
-    public void edit_course(String oldCID, String newID, String newName){
-        dbHandler.editCourse(oldCID, newID, newName);
-
-        setContentView(R.layout.activity_admin);
-    }
-
-
 
     private void viewUsers() {
 
@@ -236,7 +227,7 @@ public class AdminActivity extends AppCompatActivity implements Serializable {
         data_ListView.setAdapter(adapter);
     }
 
-
-
-
+    public DBHandler getDBHandler() {
+        return this.dbHandler;
+    }
 }

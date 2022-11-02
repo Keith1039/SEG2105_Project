@@ -1,7 +1,10 @@
 package com.example.project;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -11,47 +14,52 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import java.io.Serializable;
 
-public class EditCourse extends AppCompatActivity implements Serializable {
+public class EditCourse extends AdminActivity {
 
-    Button done;
+    Button update;
     EditText newCID, newCName;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.edit_course);
 
-        done = (Button) findViewById(R.id.updateCourse);
+        update = (Button) findViewById(R.id.updateCourse);
         newCID = (EditText) findViewById(R.id.newCID);
         newCName = (EditText) findViewById(R.id.newCName);
 
-
-        done.setOnClickListener(
+        update.setOnClickListener(
                 new View.OnClickListener() {
                     public void onClick(View view){
+                        Intent intent = getIntent();
+                        String oldID = intent.getStringExtra("OldID");
+
                         String newID = newCID.getText().toString();
                         String newName = newCName.getText().toString();
 
-                        Log.d("NewID", newID);
-                        Log.d("NewName", newName);
+                        edit_course(oldID, newID, newName);
 
-                        edit_course(newID, newName);
+                        finish();
+
 
                     }
                 }
         );
     }
 
+    public void edit_course(String oldID, String newID, String newName){
+        DBHandler dbHandler = super.getDBHandler();
+        Cursor cursor = dbHandler.getCourseData();
 
-    public void edit_course(String newID, String newName){
-        Intent intent = getIntent();
-        AdminActivity old = (AdminActivity) intent.getSerializableExtra("OldID");
-        Log.d("Old ID", String.valueOf(old));
-        finish(); 
+        while(cursor.moveToNext()){
+            Log.d("DB", cursor.getString(0));
+        }
+
+        Log.d("OldID", oldID);
+        Log.d("NewID", newID);
+        Log.d("NewName", newName);
+
+        dbHandler.editCourse(oldID, newID, newName);
+
     }
-
-
-
-
-
 
 }

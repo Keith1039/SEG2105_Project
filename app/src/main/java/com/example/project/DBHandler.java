@@ -7,8 +7,12 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.os.Parcel;
+import android.os.Parcelable;
 
-public class DBHandler  extends SQLiteOpenHelper {
+import java.io.Serializable;
+
+public class DBHandler extends SQLiteOpenHelper{
 
     //infomration about the users table
     private static final String USER_TABLE_NAME = "users";
@@ -183,7 +187,6 @@ public class DBHandler  extends SQLiteOpenHelper {
         sqLiteDatabase.close();
         return result;
     }
-
 
 }
 
