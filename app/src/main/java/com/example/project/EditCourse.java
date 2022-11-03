@@ -15,7 +15,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import java.io.Serializable;
 
 public class EditCourse extends AdminActivity {
-
     Button update;
     EditText newCID, newCName;
 
@@ -41,8 +40,6 @@ public class EditCourse extends AdminActivity {
 
                         //returns us back to the previous activity 
                         finish();
-
-
                     }
                 }
         );
@@ -60,8 +57,6 @@ public class EditCourse extends AdminActivity {
         Log.d("OldID", oldID);
         Log.d("NewID", newID);
         Log.d("NewName", newName);
-
-
 
     }
 

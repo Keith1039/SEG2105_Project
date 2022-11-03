@@ -20,9 +20,9 @@ public class DBHandler extends SQLiteOpenHelper{
     private static final String COLUMN_PASSWORD = "password";
 
     //information about the courses table
-    private static String COURSE_TABLE_NAME = "courses";
-    private static String COLUMN_COURSE_CODE = "courseCode";
-    private static String COLUMN_COURSE_NAME = "courseName";
+    private static final String COURSE_TABLE_NAME = "courses";
+    private static final String COLUMN_COURSE_CODE = "courseCode";
+    private static final String COLUMN_COURSE_NAME = "courseName";
 
     private static final String DATABASE_NAME = "university.db";
     private static final int DATABASE_VERSION = 1;
