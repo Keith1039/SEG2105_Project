@@ -153,7 +153,9 @@ public class AdminActivity extends AppCompatActivity implements Serializable {
 
                         String oldCID = data_id.getText().toString();
 
+                        //gets us to the EditCourse file
                         Intent intent = new Intent(AdminActivity.this, EditCourse.class);
+                        //places OldCID into the intent message with OldID as the key
                         intent.putExtra("OldID", oldCID);
                         startActivity(intent);
 

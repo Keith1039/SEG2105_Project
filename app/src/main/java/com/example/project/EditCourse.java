@@ -30,6 +30,7 @@ public class EditCourse extends AdminActivity {
         update.setOnClickListener(
                 new View.OnClickListener() {
                     public void onClick(View view){
+                        //opens the intent that we started on the previous file
                         Intent intent = getIntent();
                         String oldID = intent.getStringExtra("OldID");
 
@@ -38,6 +39,7 @@ public class EditCourse extends AdminActivity {
 
                         edit_course(oldID, newID, newName);
 
+                        //returns us back to the previous activity 
                         finish();
 
 
