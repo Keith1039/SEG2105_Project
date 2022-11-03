@@ -53,12 +53,13 @@ public class EditCourse extends AdminActivity {
         while(cursor.moveToNext()){
             Log.d("DB", cursor.getString(0));
         }
+        dbHandler.editCourse(oldID, newID, newName);
 
         Log.d("OldID", oldID);
         Log.d("NewID", newID);
         Log.d("NewName", newName);
 
-        dbHandler.editCourse(oldID, newID, newName);
+
 
     }
 

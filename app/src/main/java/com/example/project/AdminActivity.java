@@ -156,6 +156,9 @@ public class AdminActivity extends AppCompatActivity implements Serializable {
                         Intent intent = new Intent(AdminActivity.this, EditCourse.class);
                         intent.putExtra("OldID", oldCID);
                         startActivity(intent);
+
+                        data_id.setText("");
+                        data_name.setText("");
                     }
                 }
         );

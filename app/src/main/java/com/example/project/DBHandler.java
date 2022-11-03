@@ -20,9 +20,9 @@ public class DBHandler extends SQLiteOpenHelper{
     private static final String COLUMN_PASSWORD = "password";
 
     //information about the courses table
-    private static final String COURSE_TABLE_NAME = "courses";
-    private static final String COLUMN_COURSE_CODE = "courseCode";
-    private static final String COLUMN_COURSE_NAME = "courseName";
+    private static String COURSE_TABLE_NAME = "courses";
+    private static String COLUMN_COURSE_CODE = "courseCode";
+    private static String COLUMN_COURSE_NAME = "courseName";
 
     private static final String DATABASE_NAME = "university.db";
     private static final int DATABASE_VERSION = 1;
@@ -91,9 +91,19 @@ public class DBHandler extends SQLiteOpenHelper{
 
     public void editCourse(String oldCID, String newCID, String newCName){
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
 
-        String query = "UPDATE "+ COURSE_TABLE_NAME + " SET " + COLUMN_COURSE_CODE + " = \"" + newCID + "\", " + COLUMN_COURSE_NAME + " = \"" + newCName + "\" WHERE " + COLUMN_COURSE_CODE + " = \"" + oldCID + "\"";
+        values.put(COLUMN_COURSE_CODE, newCID);
+        values.put(COLUMN_COURSE_NAME, newCName);
+
+        sqLiteDatabase.update(COURSE_TABLE_NAME, values, COLUMN_COURSE_CODE + "=" + oldCID, null);
+/*
+        String query = "UPDATE "+ COURSE_TABLE_NAME +
+                " SET " + COLUMN_COURSE_CODE + " = \"" + newCID + "\", "
+                + COLUMN_COURSE_NAME + " = \"" + newCName + "\""
+                + " WHERE " + COLUMN_COURSE_CODE + " = \"" + oldCID + "\"";
         Cursor cursor = sqLiteDatabase.rawQuery(query, null);
+ */
     }
 
     //add a new course in the table courses in the data base
