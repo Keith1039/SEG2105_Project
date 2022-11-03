@@ -7,8 +7,12 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.os.Parcel;
+import android.os.Parcelable;
 
-public class DBHandler  extends SQLiteOpenHelper {
+import java.io.Serializable;
+
+public class DBHandler extends SQLiteOpenHelper{
 
     //infomration about the users table
     private static final String USER_TABLE_NAME = "users";
@@ -16,9 +20,9 @@ public class DBHandler  extends SQLiteOpenHelper {
     private static final String COLUMN_PASSWORD = "password";
 
     //information about the courses table
-    private static final String COURSE_TABLE_NAME = "courses";
-    private static final String COLUMN_COURSE_CODE = "courseCode";
-    private static final String COLUMN_COURSE_NAME = "courseName";
+    private static String COURSE_TABLE_NAME = "courses";
+    private static String COLUMN_COURSE_CODE = "courseCode";
+    private static String COLUMN_COURSE_NAME = "courseName";
 
     private static final String DATABASE_NAME = "university.db";
     private static final int DATABASE_VERSION = 1;
@@ -87,9 +91,13 @@ public class DBHandler  extends SQLiteOpenHelper {
 
     public void editCourse(String oldCID, String newCID, String newCName){
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
 
-        String query = "UPDATE "+ COURSE_TABLE_NAME + " SET " + COLUMN_COURSE_CODE + " = \"" + newCID + "\", " + COLUMN_COURSE_NAME + " = \"" + newCName + "\" WHERE " + COLUMN_COURSE_CODE + " = \"" + oldCID + "\"";
-        Cursor cursor = sqLiteDatabase.rawQuery(query, null);
+        values.put(COLUMN_COURSE_CODE, newCID);
+        values.put(COLUMN_COURSE_NAME, newCName);
+
+        sqLiteDatabase.update(COURSE_TABLE_NAME, values, COLUMN_COURSE_CODE + "=" + oldCID, null);
+
     }
 
     //add a new course in the table courses in the data base
@@ -183,7 +191,6 @@ public class DBHandler  extends SQLiteOpenHelper {
         sqLiteDatabase.close();
         return result;
     }
-
 
 }
 
