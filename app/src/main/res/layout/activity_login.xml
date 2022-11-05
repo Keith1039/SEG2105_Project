@@ -12,12 +12,14 @@
         android:id="@+id/admin_login"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/admin_login"
+        android:text="@string/login"
+
         app:layout_constraintBottom_toTopOf="@+id/username"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.8" />
+
 
     <EditText
         android:id="@+id/username"
@@ -45,15 +47,56 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/username" />
 
-    <Button
-        android:id="@+id/admin_login_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/admin_login_btn"
-        app:layout_constraintBottom_toBottomOf="parent"
+    <com.google.android.material.chip.ChipGroup
+        android:layout_width="352dp"
+        android:layout_height="98dp"
+        app:layout_constraintBottom_toTopOf="@+id/chipGroup"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/password"
-        app:layout_constraintVertical_bias="0.1" />
+        app:layout_constraintVertical_bias="0.0">
+
+        <Button
+            android:id="@+id/admin_login_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/admin_login_btn" />
+
+        <Button
+            android:id="@+id/student_log"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/login_as_student" />
+
+        <Button
+            android:id="@+id/instructor_log"
+            android:layout_width="160dp"
+            android:layout_height="wrap_content"
+            android:text="@string/login_as_instructor" />
+
+        <Button
+            android:id="@+id/create_student"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/student_sign_up" />
+    </com.google.android.material.chip.ChipGroup>
+
+    <com.google.android.material.chip.ChipGroup
+        android:id="@+id/chipGroup"
+        android:layout_width="192dp"
+        android:layout_height="51dp"
+        app:layout_constraintBottom_toTopOf="@+id/chipGroup"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/password"
+        app:layout_constraintVertical_bias="1.0">
+
+
+        <Button
+            android:id="@+id/create_instructor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/instructor_sign_up" />
+    </com.google.android.material.chip.ChipGroup>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

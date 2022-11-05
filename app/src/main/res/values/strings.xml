@@ -17,4 +17,12 @@
     <string name="new_course_id">New Course ID</string>
     <string name="new_course_name">New Course Name</string>
     <string name="update_course">update course</string>
+    <string name="create_user">Create User</string>
+    <string name="login_as_user">Login as User</string>
+    <string name="login_as_student">Login as Student</string>
+    <string name="login_as_instructor">Login as Instructor</string>
+    <string name="student_sign_up">Student Sign Up</string>
+    <string name="instructor_sign_up">Instructor Sign Up</string>
+    <string name="login">Login</string>
+    <string name="welcome_user">Welcome User!</string>
 </resources>
