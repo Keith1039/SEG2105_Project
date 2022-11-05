@@ -30,6 +30,9 @@
             android:name=".EditCourse" />
 
         <activity
+            android:name=".UserActivity" />
+
+        <activity
             android:name=".AdminActivity"/>
     </application>
 
