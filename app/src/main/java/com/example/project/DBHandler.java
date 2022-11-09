@@ -119,11 +119,11 @@ public class DBHandler extends SQLiteOpenHelper{
 
         SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
 
-        String query = "SELECT "+ COLUMN_ID + " FROM " + USER_TABLE_NAME + " WHERE " + COLUMN_ID + "= \"" + userID + "\"";
+        String query = "SELECT * FROM " + USER_TABLE_NAME + " WHERE " + COLUMN_ID + " =\"" + userID + "\"";
         Cursor cursor = sqLiteDatabase.rawQuery(query, null);
 
         //Create a user and put the result on it
-        User user = new User();
+        User user;
         if (cursor.moveToFirst()){
             user = new User(cursor.getString(0),cursor.getString(1));
             cursor.close();

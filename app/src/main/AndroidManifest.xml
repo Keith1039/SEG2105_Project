@@ -29,11 +29,17 @@
         <activity
             android:name=".EditCourse" />
 
-        <activity
-            android:name=".UserActivity" />
 
         <activity
             android:name=".AdminActivity"/>
+        <activity
+            android:name=".SignupActivity"/>
+        <activity
+            android:name=".InstructorActivity"/>
+        <activity
+            android:name=".StudentActivity"/>
     </application>
+
+
 
 </manifest>
