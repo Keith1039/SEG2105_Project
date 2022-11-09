@@ -2,8 +2,11 @@ package com.example.project;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -11,9 +14,10 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class AdminActivity extends AppCompatActivity {
+public class AdminActivity extends AppCompatActivity implements Serializable {
 
     EditText data_id, data_name;
     ListView data_ListView ;
@@ -29,6 +33,7 @@ public class AdminActivity extends AppCompatActivity {
     ArrayList<String> data_List;
     ArrayAdapter adapter;
     DBHandler dbHandler;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -131,6 +136,8 @@ public class AdminActivity extends AppCompatActivity {
                 }
         );
 
+
+
         // Edit an existing course
         edit_course.setOnClickListener(
                 new View.OnClickListener() {
@@ -143,9 +150,22 @@ public class AdminActivity extends AppCompatActivity {
                         // setContentView(R.layout.edit_course);
                         // which hasn't been made yet
                         // admin.editCourse(oldCode, newCode, newName);
+
+                        String oldCID = data_id.getText().toString();
+
+                        //gets us to the EditCourse file
+                        Intent intent = new Intent(AdminActivity.this, EditCourse.class);
+                        //places OldCID into the intent message with OldID as the key
+                        intent.putExtra("OldID", oldCID);
+                        startActivity(intent);
+
+                        data_id.setText("");
+                        data_name.setText("");
                     }
                 }
         );
+
+
 
         // Delete an existing course
         delete_course.setOnClickListener(
@@ -178,6 +198,7 @@ public class AdminActivity extends AppCompatActivity {
         );
     }
 
+
     private void viewCourses() {
 
         data_List.clear();
@@ -193,6 +214,8 @@ public class AdminActivity extends AppCompatActivity {
         adapter = new ArrayAdapter<> (this, android.R.layout.simple_list_item_1, data_List);
         data_ListView.setAdapter(adapter);
     }
+
+
     private void viewUsers() {
 
         data_List.clear();
@@ -209,7 +232,7 @@ public class AdminActivity extends AppCompatActivity {
         data_ListView.setAdapter(adapter);
     }
 
-
-
-
+    public DBHandler getDBHandler() {
+        return this.dbHandler;
+    }
 }

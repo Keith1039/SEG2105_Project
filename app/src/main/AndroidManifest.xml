@@ -25,8 +25,20 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
+
+        <activity
+            android:name=".EditCourse" />
+
         <activity
             android:name=".AdminActivity"/>
+        <activity
+            android:name=".SignupActivity"/>
+        <activity
+            android:name=".InstructorActivity"/>
+        <activity
+            android:name=".StudentActivity"/>
     </application>
+
+
 
 </manifest>

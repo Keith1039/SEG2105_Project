@@ -7,8 +7,12 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.os.Parcel;
+import android.os.Parcelable;
 
-public class DBHandler  extends SQLiteOpenHelper {
+import java.io.Serializable;
+
+public class DBHandler extends SQLiteOpenHelper{
 
     //infomration about the users table
     private static final String USER_TABLE_NAME = "users";
@@ -85,6 +89,17 @@ public class DBHandler  extends SQLiteOpenHelper {
         sqLiteDatabase.close();
     }
 
+    public void editCourse(String oldCID, String newCID, String newCName){
+        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        values.put(COLUMN_COURSE_CODE, newCID);
+        values.put(COLUMN_COURSE_NAME, newCName);
+
+        sqLiteDatabase.update(COURSE_TABLE_NAME, values, COLUMN_COURSE_CODE + "=" + oldCID, null);
+
+    }
+
     //add a new course in the table courses in the data base
     public void addCourse(Course course) {
 
@@ -104,11 +119,11 @@ public class DBHandler  extends SQLiteOpenHelper {
 
         SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
 
-        String query = "SELECT "+ COLUMN_ID + " FROM " + USER_TABLE_NAME + " WHERE " + COLUMN_ID + "= \"" + userID + "\"";
+        String query = "SELECT * FROM " + USER_TABLE_NAME + " WHERE " + COLUMN_ID + " =\"" + userID + "\"";
         Cursor cursor = sqLiteDatabase.rawQuery(query, null);
 
         //Create a user and put the result on it
-        User user = new User();
+        User user;
         if (cursor.moveToFirst()){
             user = new User(cursor.getString(0),cursor.getString(1));
             cursor.close();
@@ -176,7 +191,6 @@ public class DBHandler  extends SQLiteOpenHelper {
         sqLiteDatabase.close();
         return result;
     }
-
 
 }
 
