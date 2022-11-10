@@ -13,7 +13,6 @@ public class LoginActivity extends AppCompatActivity {
     EditText username;
     EditText password;
     Button log_in_btn,sign_up_btn;
-
     DBHandler dbHandler;
 
     @Override
@@ -26,7 +25,6 @@ public class LoginActivity extends AppCompatActivity {
         password = (EditText) findViewById(R.id.password);
         log_in_btn = (Button) findViewById(R.id.log_in_btn);
         sign_up_btn = (Button) findViewById(R.id.sign_up_btn);
-
         
 
         // Later we will add a universal login button to fetch a user from database using username
@@ -55,12 +53,14 @@ public class LoginActivity extends AppCompatActivity {
                             //See if the username format match the student username format which is "adbcd123" and go to student page
                             else if ((userName.matches("[a-z0-9]+"))==true ){
                                 Intent intent = new Intent(LoginActivity.this, StudentActivity.class);
+                                intent.putExtra("usernameEditText", userName);
                                 startActivity(intent);
 
                             }
                             else if ((userName.matches("[a-zA-Z]+"))== true){
                                 //See if the username format match the instructor username format which is "adbcd" and go to instructor  page
                                 Intent intent = new Intent(LoginActivity.this, InstructorActivity.class);
+                                intent.putExtra("usernameEditText", userName);
                                 startActivity(intent);
                             }
                         }
@@ -84,7 +84,6 @@ public class LoginActivity extends AppCompatActivity {
 
                     }
 
-       
                 }
         );
     }

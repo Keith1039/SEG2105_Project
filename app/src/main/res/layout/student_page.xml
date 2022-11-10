@@ -6,12 +6,15 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <TextView
-        android:id="@+id/student_page"
+        android:id="@+id/student_welcome"
         android:layout_width="201dp"
         android:layout_height="116dp"
-        android:text="Welcome Student !"
+        android:layout_marginStart="105dp"
+        android:layout_marginTop="156dp"
+        android:layout_marginEnd="105dp"
         android:textAlignment="center"
-        tools:layout_editor_absoluteX="105dp"
-        tools:layout_editor_absoluteY="156dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         tools:ignore="MissingConstraints" />
 </androidx.constraintlayout.widget.ConstraintLayout>

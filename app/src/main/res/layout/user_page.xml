@@ -5,12 +5,11 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/student_page"
+        android:id="@+id/instructor_welcome"
         android:layout_width="201dp"
         android:layout_height="116dp"
         android:text="@string/welcome_user"
         android:textAlignment="center"
         tools:layout_editor_absoluteX="105dp"
         tools:layout_editor_absoluteY="156dp" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>

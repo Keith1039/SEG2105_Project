@@ -7,13 +7,14 @@ public class Course {
     private Instructor prof;
     private String description;
     private int capacity;
-    private int[] days;
+    private String days;
     private int[] hours;
 
     public Course(String code, String name) {
         this.code = code;
         this.name = name;
     }
+
 
     public String getCode() {
         return code;
@@ -55,11 +56,11 @@ public class Course {
         this.capacity = capacity;
     }
 
-    public int[] getDays() {
+    public String getDays() {
         return days;
     }
 
-    public void setDays(int[] days) {
+    public void setDays(String days) {
         this.days = days;
     }
 
