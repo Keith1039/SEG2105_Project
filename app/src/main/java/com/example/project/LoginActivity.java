@@ -13,6 +13,7 @@ public class LoginActivity extends AppCompatActivity {
     EditText username;
     EditText password;
     Button log_in_btn,sign_up_btn;
+
     DBHandler dbHandler;
 
     @Override
@@ -25,6 +26,7 @@ public class LoginActivity extends AppCompatActivity {
         password = (EditText) findViewById(R.id.password);
         log_in_btn = (Button) findViewById(R.id.log_in_btn);
         sign_up_btn = (Button) findViewById(R.id.sign_up_btn);
+
         
 
         // Later we will add a universal login button to fetch a user from database using username
@@ -84,6 +86,7 @@ public class LoginActivity extends AppCompatActivity {
 
                     }
 
+       
                 }
         );
     }
