@@ -14,7 +14,7 @@ import java.io.Serializable;
 
 public class DBHandler extends SQLiteOpenHelper{
 
-    //infomration about the users table
+    //information about the users table
     private static final String USER_TABLE_NAME = "users";
     private static final String COLUMN_ID = "id";
     private static final String COLUMN_PASSWORD = "password";
@@ -23,6 +23,12 @@ public class DBHandler extends SQLiteOpenHelper{
     private static final String COURSE_TABLE_NAME = "courses";
     private static final String COLUMN_COURSE_CODE = "courseCode";
     private static final String COLUMN_COURSE_NAME = "courseName";
+    //additional information about the course table
+    private static final String COLUMN_COURSE_INSTRUCTOR = "courseInstructor";
+    private static final String COLUMN_COURSE_DAYS = "courseDays";
+    private static final String COLUMN_COURSE_HOURS = "courseHours";
+    private static final String COLUMN_COURSE_DESCRIPTION = "courseDescription";
+    private static final String COLUMN_COURSE_CAPACITY = "courseCapacity";
 
     private static final String DATABASE_NAME = "university.db";
     private static final int DATABASE_VERSION = 1;
@@ -44,7 +50,13 @@ public class DBHandler extends SQLiteOpenHelper{
         //Create the courses table
         String create_course_table_cmd = "CREATE TABLE " + COURSE_TABLE_NAME +
                 "(" + COLUMN_COURSE_CODE + " varchar(20) PRIMARY KEY, " +
-                COLUMN_COURSE_NAME + " varchar(20))";
+                COLUMN_COURSE_NAME + " varchar(20), " +
+                COLUMN_COURSE_INSTRUCTOR + " varchar(20), "+
+                COLUMN_COURSE_DAYS + " varchar(100), " +
+                COLUMN_COURSE_HOURS + " varchar(50), " +
+                COLUMN_COURSE_DESCRIPTION + " varchar(100), " +
+                COLUMN_COURSE_CAPACITY + " int)"
+                ;
 
         sqLiteDatabase.execSQL(create_course_table_cmd);
 
@@ -190,6 +202,11 @@ public class DBHandler extends SQLiteOpenHelper{
         }
         sqLiteDatabase.close();
         return result;
+    }
+
+    // update a course
+    public boolean updateCourse(){
+        return true ;
     }
 
 }

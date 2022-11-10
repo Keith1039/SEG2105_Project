@@ -6,7 +6,7 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/student_page"
+        android:id="@+id/instructor_welcome"
         android:layout_width="0dp"
         android:layout_height="50dp"
         android:layout_marginTop="20dp"
@@ -28,7 +28,7 @@
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/student_page">
+        app:layout_constraintTop_toBottomOf="@+id/instructor_welcome">
 
         <EditText
             android:id="@+id/username_signup"

@@ -25,4 +25,8 @@
     <string name="instructor_sign_up">Instructor Sign Up</string>
     <string name="login">Login</string>
     <string name="welcome_user">Welcome User!</string>
+    <string name="search">search</string>
+    <string name="edit">edit</string>
+    <string name="display_course">display course</string>
+    <string name="update">update</string>
 </resources>
