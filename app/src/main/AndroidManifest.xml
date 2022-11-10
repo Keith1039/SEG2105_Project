@@ -29,7 +29,6 @@
         <activity
             android:name=".EditCourse" />
 
-
         <activity
             android:name=".AdminActivity"/>
         <activity
