@@ -33,6 +33,7 @@ public class InstructorActivity extends AppCompatActivity implements Serializabl
         // Set the xml page to the corresponding activity
         // In this case, we are using activity_admin.xml
         setContentView(R.layout.instructor_page);
+        course_List = new ArrayList<String>(); 
 
         //this code will simply get the username typed in the login page and display it here so we know which user is currently on this page
         Intent intent = getIntent();
