@@ -15,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 public class InstructorActivity extends AppCompatActivity implements Serializable {
 
@@ -66,13 +67,7 @@ public class InstructorActivity extends AppCompatActivity implements Serializabl
                         String courseCode = course_code.getText().toString();
                         String courseName = course_name.getText().toString();
 
-
-
-
-
-
-
-
+                        lookupCourse(courseCode, courseName);
                     }
                 }
         );
@@ -100,11 +95,6 @@ public class InstructorActivity extends AppCompatActivity implements Serializabl
                 }
         );
 
-
-
-
-
-
     }
 
     private void viewCourses() {
@@ -120,6 +110,46 @@ public class InstructorActivity extends AppCompatActivity implements Serializabl
             }
         }
         adapter = new ArrayAdapter<> (this, android.R.layout.simple_list_item_1,course_List);
+        course_ListView.setAdapter(adapter);
+    }
+
+    private void lookupCourse(String courseCode, String courseName){
+        DBHandler dbHandler = new DBHandler(this);
+        Cursor cursor = null;
+
+        if(courseCode.length() == 0) {
+            cursor = dbHandler.findCoursebyName(courseName);
+            Toast.makeText(InstructorActivity.this, "In CName", Toast.LENGTH_SHORT).show();
+
+        }else if(courseName.length() == 0){
+            cursor = dbHandler.findCourse(courseCode);
+            Toast.makeText(InstructorActivity.this, "In CCode", Toast.LENGTH_SHORT).show();
+
+        }else if (courseCode.length() != 0 && courseName.length() != 0){
+            cursor = dbHandler.findCourse(courseName, courseCode);
+            Toast.makeText(InstructorActivity.this, "In Both", Toast.LENGTH_SHORT).show();
+
+        }else{
+            Toast.makeText(InstructorActivity.this, "Must input a valid course name or code", Toast.LENGTH_SHORT).show();
+        }
+
+        try{
+            foundDisplay(cursor);
+        }catch (Exception e){
+            Toast.makeText(InstructorActivity.this, "No courses with that name found", Toast.LENGTH_SHORT).show();
+        }
+
+    }
+
+    private void foundDisplay(Cursor cursor){
+        List<String> found = new ArrayList<String>();
+
+        found.clear();
+        while (cursor.moveToNext()) {
+            found.add(cursor.getString(0) + ": " +cursor.getString(1));
+        }
+
+        adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, found);
         course_ListView.setAdapter(adapter);
     }
 

@@ -31,7 +31,7 @@ public class DBHandler extends SQLiteOpenHelper{
     private static final String COLUMN_COURSE_CAPACITY = "courseCapacity";
 
     private static final String DATABASE_NAME = "university.db";
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
 
     public DBHandler(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -146,24 +146,35 @@ public class DBHandler extends SQLiteOpenHelper{
         return user ;
     }
 
-    //given a course code find it in the database if not there return null
-    public Course findCourse(String courseCode){
+    public Cursor findCourse(String courseCode){
 
         SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
 
-        String query = "SELECT * FROM " + COURSE_TABLE_NAME + " WHERE " + COLUMN_COURSE_CODE + "= \"" + courseCode + "\"";
+        String query = "SELECT * FROM " + COURSE_TABLE_NAME + " WHERE " + COLUMN_COURSE_CODE + " LIKE \"" + courseCode + "%\"";
         Cursor cursor = sqLiteDatabase.rawQuery(query, null);
 
-        //Create a course and put the result on it
-        Course course;
-        if (cursor.moveToFirst()){
-            course= new Course(cursor.getString(0),cursor.getString(1));
-            cursor.close();
-        }
-        else course = null;
+        return cursor;
+    }
 
-        sqLiteDatabase.close();
-        return course ;
+    public Cursor findCoursebyName(String courseName){
+
+        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+
+        String query = "SELECT * FROM " + COURSE_TABLE_NAME + " WHERE " + COLUMN_COURSE_NAME + " LIKE \"" + courseName + "%\"";
+        Cursor cursor = sqLiteDatabase.rawQuery(query, null);
+
+        return cursor;
+    }
+
+
+    public Cursor findCourse(String courseName, String courseCode){
+
+        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+
+        String query = "SELECT * FROM " + COURSE_TABLE_NAME + " WHERE " + COLUMN_COURSE_NAME + " LIKE \"" + courseName + "%\" AND " + COLUMN_COURSE_CODE + " LIKE \"" + courseCode + "%\"";
+        Cursor cursor = sqLiteDatabase.rawQuery(query, null);
+
+        return cursor;
     }
 
     //given a userid find it in the database and delete it
