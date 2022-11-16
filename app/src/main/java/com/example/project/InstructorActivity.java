@@ -116,23 +116,15 @@ public class InstructorActivity extends AppCompatActivity implements Serializabl
     private void lookupCourse(String courseCode, String courseName){
         DBHandler dbHandler = new DBHandler(this);
         Cursor cursor = null;
+        String x = new String(String.valueOf(courseName.length()));
 
-        if(courseCode.length() == 0) {
+        if(courseCode.length() == 0 && courseName.length() != 0) {
             cursor = dbHandler.findCoursebyName(courseName);
-            Toast.makeText(InstructorActivity.this, "In CName", Toast.LENGTH_SHORT).show();
-
-        }else if(courseName.length() == 0){
+        }else if(courseName.length() == 0 && courseCode.length() != 0){
             cursor = dbHandler.findCourse(courseCode);
-            Toast.makeText(InstructorActivity.this, "In CCode", Toast.LENGTH_SHORT).show();
-
         }else if (courseCode.length() != 0 && courseName.length() != 0){
             cursor = dbHandler.findCourse(courseName, courseCode);
-            Toast.makeText(InstructorActivity.this, "In Both", Toast.LENGTH_SHORT).show();
-
-        }else{
-            Toast.makeText(InstructorActivity.this, "Must input a valid course name or code", Toast.LENGTH_SHORT).show();
         }
-
         try{
             foundDisplay(cursor);
         }catch (Exception e){

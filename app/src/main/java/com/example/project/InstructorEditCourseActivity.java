@@ -14,5 +14,20 @@ public class InstructorEditCourseActivity extends AppCompatActivity{
         setContentView(R.layout.edit_course_activity);
     }
 
-    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+}
 
