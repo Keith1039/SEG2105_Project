@@ -92,8 +92,13 @@ public class InstructorEditCourseActivity extends AppCompatActivity implements A
                         String day2 = secondDay.getText().toString();
                         String desc = CDesc.getText().toString();
 
-                        db.updateCourse(oldCode, CCode, CName, prof, day1, day2, desc, Integer.parseInt(cap), time1, time2);
-                        finish();
+                        if(desc.equals("") || day1.equals("") || day2.equals("")){
+                            Toast.makeText(InstructorEditCourseActivity.this, "Please enter a response for all available text boxes", Toast.LENGTH_SHORT).show();
+
+                        }else {
+                            db.updateCourse(oldCode, CCode, CName, prof, day1, day2, desc, Integer.parseInt(cap), time1, time2);
+                            finish();
+                        }
                     }
                 }
         );
