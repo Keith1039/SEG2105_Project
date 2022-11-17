@@ -94,15 +94,12 @@ public class InstructorEditCourseActivity extends AppCompatActivity implements A
                 secondDay.setText(cday2);
                 CDesc.setText(cdesc);
 
+                String newcap = String.valueOf(ccap);
+                capacity.setSelection(getIndex(capacity, newcap));
 
-                int sel = adapter.getPosition(ccap);
-                capacity.setSelection(sel);
+                dropdown.setSelection(getIndex(dropdown, ct1));
+                second.setSelection(getIndex(second, ct2));
 
-                int ft = ada.getPosition(ct1);
-                dropdown.setSelection(ft);
-
-                int st = ada.getPosition(ct2);
-                second.setSelection(st);
 
             }
         }
@@ -167,6 +164,16 @@ public class InstructorEditCourseActivity extends AppCompatActivity implements A
     @Override
     public void onNothingSelected(AdapterView<?> adapterView) {
 
+    }
+
+    private int getIndex(Spinner spinner, String myString){
+        for (int i=0;i<spinner.getCount();i++){
+            if (spinner.getItemAtPosition(i).toString().equalsIgnoreCase(myString)){
+                return i;
+            }
+        }
+
+        return 0;
     }
 
 }
