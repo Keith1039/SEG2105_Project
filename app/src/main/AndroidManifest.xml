@@ -37,6 +37,8 @@
             android:name=".InstructorActivity"/>
         <activity
             android:name=".StudentActivity"/>
+        <activity
+            android:name=".InstructorEditCourseActivity"/>
     </application>
 
 

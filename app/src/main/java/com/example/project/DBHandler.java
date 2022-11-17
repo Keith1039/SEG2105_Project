@@ -9,8 +9,10 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
 
 import java.io.Serializable;
+import java.util.Observer;
 
 public class DBHandler extends SQLiteOpenHelper{
 
@@ -25,13 +27,15 @@ public class DBHandler extends SQLiteOpenHelper{
     private static final String COLUMN_COURSE_NAME = "courseName";
     //additional information about the course table
     private static final String COLUMN_COURSE_INSTRUCTOR = "courseInstructor";
-    private static final String COLUMN_COURSE_DAYS = "courseDays";
-    private static final String COLUMN_COURSE_HOURS = "courseHours";
+    private static final String COLUMN_COURSE_FIRSTDAY = "courseDay1";
+    private static final String COLUMN_COURSE_SECONDDAY = "courseDay2";
+    private static final String COLUMN_COURSE_FIRSTTIME = "courseTime1";
+    private static final String COLUMN_COURSE_SECONDTIME = "courseTime2";
     private static final String COLUMN_COURSE_DESCRIPTION = "courseDescription";
     private static final String COLUMN_COURSE_CAPACITY = "courseCapacity";
 
     private static final String DATABASE_NAME = "university.db";
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 3;
 
     public DBHandler(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -52,8 +56,10 @@ public class DBHandler extends SQLiteOpenHelper{
                 "(" + COLUMN_COURSE_CODE + " varchar(20) PRIMARY KEY, " +
                 COLUMN_COURSE_NAME + " varchar(20), " +
                 COLUMN_COURSE_INSTRUCTOR + " varchar(20), "+
-                COLUMN_COURSE_DAYS + " varchar(100), " +
-                COLUMN_COURSE_HOURS + " varchar(50), " +
+                COLUMN_COURSE_FIRSTDAY + " varchar(100), " +
+                COLUMN_COURSE_SECONDDAY + " varchar(100), "+
+                COLUMN_COURSE_FIRSTTIME + " varchar(100), "+
+                COLUMN_COURSE_SECONDTIME + " varchar(100), "+
                 COLUMN_COURSE_DESCRIPTION + " varchar(100), " +
                 COLUMN_COURSE_CAPACITY + " int)"
                 ;
@@ -87,6 +93,16 @@ public class DBHandler extends SQLiteOpenHelper{
         return sqLiteDatabase.rawQuery(query, null);
     }
 
+    public Cursor getSpecificData(String CCode){
+        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+
+        String query = "SELECT * FROM " + COURSE_TABLE_NAME + " WHERE " + COLUMN_COURSE_CODE + " =\"" + CCode + "\"";
+        Cursor cursor = sqLiteDatabase.rawQuery(query, null);
+
+        return cursor;
+    }
+
+
     //add a new user in the table users in the data base
     public void addUsers(User user) {
 
@@ -109,8 +125,30 @@ public class DBHandler extends SQLiteOpenHelper{
         values.put(COLUMN_COURSE_NAME, newCName);
 
         sqLiteDatabase.update(COURSE_TABLE_NAME, values, COLUMN_COURSE_CODE + "=" + oldCID, null);
+        sqLiteDatabase.close();
 
     }
+
+
+    public void updateCourse(String Ccode, String CCode, String CName, String PName, String day1, String day2, String desc, int Capacity, String time1, String time2){
+        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        values.put(COLUMN_COURSE_NAME, CName);
+        values.put(COLUMN_COURSE_CODE, CCode);
+        values.put(COLUMN_COURSE_INSTRUCTOR, PName);
+        values.put(COLUMN_COURSE_DESCRIPTION, desc);
+        values.put(COLUMN_COURSE_CAPACITY, Capacity);
+        values.put(COLUMN_COURSE_FIRSTDAY, day1);
+        values.put(COLUMN_COURSE_SECONDDAY, day2);
+        values.put(COLUMN_COURSE_FIRSTTIME, time1);
+        values.put(COLUMN_COURSE_SECONDTIME, time2);
+
+        sqLiteDatabase.update(COURSE_TABLE_NAME, values, COLUMN_COURSE_CODE + "=" + Ccode, null);
+        sqLiteDatabase.close();
+    }
+
+
 
     //add a new course in the table courses in the data base
     public void addCourse(Course course) {
@@ -146,24 +184,35 @@ public class DBHandler extends SQLiteOpenHelper{
         return user ;
     }
 
-    //given a course code find it in the database if not there return null
-    public Course findCourse(String courseCode){
+    public Cursor findCourse(String courseCode){
 
         SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
 
-        String query = "SELECT * FROM " + COURSE_TABLE_NAME + " WHERE " + COLUMN_COURSE_CODE + "= \"" + courseCode + "\"";
+        String query = "SELECT * FROM " + COURSE_TABLE_NAME + " WHERE " + COLUMN_COURSE_CODE + " LIKE \"" + courseCode + "%\"";
         Cursor cursor = sqLiteDatabase.rawQuery(query, null);
 
-        //Create a course and put the result on it
-        Course course;
-        if (cursor.moveToFirst()){
-            course= new Course(cursor.getString(0),cursor.getString(1));
-            cursor.close();
-        }
-        else course = null;
+        return cursor;
+    }
 
-        sqLiteDatabase.close();
-        return course ;
+    public Cursor findCoursebyName(String courseName){
+
+        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+
+        String query = "SELECT * FROM " + COURSE_TABLE_NAME + " WHERE " + COLUMN_COURSE_NAME + " LIKE \"" + courseName + "%\"";
+        Cursor cursor = sqLiteDatabase.rawQuery(query, null);
+
+        return cursor;
+    }
+
+
+    public Cursor findCourse(String courseName, String courseCode){
+
+        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+
+        String query = "SELECT * FROM " + COURSE_TABLE_NAME + " WHERE " + COLUMN_COURSE_NAME + " LIKE \"" + courseName + "%\" AND " + COLUMN_COURSE_CODE + " LIKE \"" + courseCode + "%\"";
+        Cursor cursor = sqLiteDatabase.rawQuery(query, null);
+
+        return cursor;
     }
 
     //given a userid find it in the database and delete it
@@ -204,10 +253,28 @@ public class DBHandler extends SQLiteOpenHelper{
         return result;
     }
 
-    // update a course
-    public boolean updateCourse(){
-        return true ;
+    public boolean isProf(String CCode, String provided){
+        boolean result = false;
+        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+
+        String query = "SELECT * FROM " + COURSE_TABLE_NAME + " WHERE " + COLUMN_COURSE_CODE + " =\"" + CCode + "\"";
+        Cursor cursor = sqLiteDatabase.rawQuery(query, null);
+
+        if(cursor.moveToFirst()){
+            String courseStr = cursor.getString(2);
+            if(courseStr == null || courseStr.equals("")){
+                result = true;
+                cursor.close();
+            }else if(courseStr.equals(provided)){
+                result = true;
+                cursor.close();
+            }
+        }
+        sqLiteDatabase.close();
+        return result;
+
     }
+
 
 }
 

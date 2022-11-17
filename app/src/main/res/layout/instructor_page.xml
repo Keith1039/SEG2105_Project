@@ -84,7 +84,7 @@
             android:minHeight="50dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/display_course" />
+            android:text="@string/display_courses" />
     </LinearLayout>
 
     <LinearLayout
