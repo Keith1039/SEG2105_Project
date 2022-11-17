@@ -1,36 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/capacity"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/instructor_name"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="20dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <LinearLayout
         android:id="@+id/courseInfoLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="369dp"
+        android:layout_height="553dp"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
         android:layout_marginEnd="20dp"
-        android:layout_marginBottom="200dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.75"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/instructor_name">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.142">
+
+        <TextView
+            android:id="@+id/profName"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:text="Professor" />
 
         <EditText
-            android:id="@+id/Code"
+            android:id="@+id/courseName"
+            android:layout_width="match_parent"
+            android:layout_height="38dp"
+            android:layout_marginTop="5dp"
+            android:ems="20"
+            android:inputType="text"
+            android:minHeight="50dp"
+            android:text="Name" />
+
+        <EditText
+            android:id="@+id/Ccode"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="20"
@@ -39,64 +46,68 @@
             android:text="Code" />
 
         <EditText
-            android:id="@+id/name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="20"
-            android:layout_marginTop="5dp"
-            android:inputType="text"
-            android:minHeight="50dp"
-            android:text="Name" />
-
-        <EditText
-            android:id="@+id/prof_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:ems="20"
-            android:inputType="text"
-            android:minHeight="50dp"
-            android:text="prof_name" />
-
-        <EditText
-            android:id="@+id/course_days"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:ems="20"
-            android:inputType="text"
-            android:minHeight="50dp"
-            android:text="days" />
-
-        <EditText
-            android:id="@+id/course_hours"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:ems="20"
-            android:inputType="text"
-            android:minHeight="50dp"
-            android:text="hours" />
-
-        <EditText
             android:id="@+id/course_description"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="39dp"
             android:layout_marginTop="5dp"
             android:ems="20"
+            android:hint="Course Description"
             android:inputType="text"
-            android:minHeight="50dp"
-            android:text="description" />
+            android:minHeight="50dp" />
 
-        <EditText
-            android:id="@+id/course_capacity"
+        <TextView
+            android:id="@+id/capacityText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:text="Capacity" />
+
+        <Spinner
+            android:id="@+id/spinner2"
+            android:layout_width="match_parent"
+            android:layout_height="34dp" />
+
+        <EditText
+            android:id="@+id/firstDay"
+            android:layout_width="match_parent"
+            android:layout_height="38dp"
             android:layout_marginTop="5dp"
             android:ems="20"
-            android:inputType="number"
-            android:minHeight="50dp"
-            android:text="capacity" />
+            android:hint="Enter a Day of the Week"
+            android:inputType="text"
+            android:minHeight="50dp" />
+
+        <TextView
+            android:id="@+id/time1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Time" />
+
+        <Spinner
+            android:id="@+id/timesel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <EditText
+            android:id="@+id/secondDay"
+            android:layout_width="match_parent"
+            android:layout_height="38dp"
+            android:layout_marginTop="5dp"
+            android:ems="20"
+            android:hint="Enter a Day of the Week"
+            android:inputType="text"
+            android:minHeight="50dp" />
+
+        <TextView
+            android:id="@+id/time2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Time" />
+
+        <Spinner
+            android:id="@+id/timesel2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
     </LinearLayout>
 
     <LinearLayout
@@ -118,5 +129,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/update" />
+
+        <Button
+            android:id="@+id/unassign"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#E80C0C"
+            android:text="Leave Course" />
     </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

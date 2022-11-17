@@ -29,4 +29,5 @@
     <string name="edit">edit</string>
     <string name="display_course">display course</string>
     <string name="update">update</string>
+    <string name="display_courses">Display Courses</string>
 </resources>

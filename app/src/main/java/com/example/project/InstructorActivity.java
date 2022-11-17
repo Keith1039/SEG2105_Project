@@ -44,7 +44,7 @@ public class InstructorActivity extends AppCompatActivity implements Serializabl
                 str = intent.getStringExtra("usernameEditText");
             }
             TextView textView = (TextView) findViewById(R.id.instructor_welcome);
-            textView.setText("Welcome instructor : "+str);
+            textView.setText("Current Instructor : "+str);
         }
 
         //linked button to the button in instructor layout
@@ -54,6 +54,8 @@ public class InstructorActivity extends AppCompatActivity implements Serializabl
         search = (Button) findViewById(R.id.search);
         edit = (Button) findViewById(R.id.edit);
         display = (Button) findViewById(R.id.display_course);
+        assert intent != null;
+        String profName = intent.getStringExtra("usernameEditText");
 
         //connect to database
         dbHandler = new DBHandler(this);
@@ -77,8 +79,27 @@ public class InstructorActivity extends AppCompatActivity implements Serializabl
                     @Override
                     public void onClick(View view) {
                         // Starts the EditActivity
+                        //SET A CHECK TO MAKE SURE NO FIELD IS EMPTY
                         Intent intent = new Intent(InstructorActivity.this, InstructorEditCourseActivity.class);
-                        startActivity(intent);
+                        String courseCode = course_code.getText().toString();
+                        String courseName = course_name.getText().toString();
+
+                        intent.putExtra("CCode", courseCode);
+                        intent.putExtra("CName", courseName);
+                        intent.putExtra("profName", profName);
+
+                        if(course_code.length() != 0 && course_name.length() != 0){
+                            boolean result = dbHandler.isProf(courseCode, profName.trim());
+                            if(result) {
+                                startActivity(intent);
+                            }else{
+                                Toast.makeText(InstructorActivity.this, "Another professor is already assigned", Toast.LENGTH_SHORT).show();
+
+                            }
+                        }else{
+                            Toast.makeText(InstructorActivity.this, "Please enter both the course code and course name", Toast.LENGTH_SHORT).show();
+                        }
+
                     }
                 }
         );
