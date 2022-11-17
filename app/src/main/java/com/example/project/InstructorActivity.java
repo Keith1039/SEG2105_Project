@@ -60,6 +60,10 @@ public class InstructorActivity extends AppCompatActivity implements Serializabl
         //connect to database
         dbHandler = new DBHandler(this);
 
+
+
+
+
         //find course by course code and course name
         search.setOnClickListener(
                 new View.OnClickListener() {
@@ -93,7 +97,7 @@ public class InstructorActivity extends AppCompatActivity implements Serializabl
                             if(result) {
                                 startActivity(intent);
                             }else{
-                                Toast.makeText(InstructorActivity.this, "Another professor is already assigned", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(InstructorActivity.this, "Another professor is already assigned or the course does not exist", Toast.LENGTH_SHORT).show();
 
                             }
                         }else{

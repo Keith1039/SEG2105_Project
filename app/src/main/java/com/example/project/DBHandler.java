@@ -93,6 +93,16 @@ public class DBHandler extends SQLiteOpenHelper{
         return sqLiteDatabase.rawQuery(query, null);
     }
 
+    public Cursor getSpecificData(String CCode){
+        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+
+        String query = "SELECT * FROM " + COURSE_TABLE_NAME + " WHERE " + COLUMN_COURSE_CODE + " =\"" + CCode + "\"";
+        Cursor cursor = sqLiteDatabase.rawQuery(query, null);
+
+        return cursor;
+    }
+
+
     //add a new user in the table users in the data base
     public void addUsers(User user) {
 
@@ -115,6 +125,7 @@ public class DBHandler extends SQLiteOpenHelper{
         values.put(COLUMN_COURSE_NAME, newCName);
 
         sqLiteDatabase.update(COURSE_TABLE_NAME, values, COLUMN_COURSE_CODE + "=" + oldCID, null);
+        sqLiteDatabase.close();
 
     }
 
@@ -133,10 +144,8 @@ public class DBHandler extends SQLiteOpenHelper{
         values.put(COLUMN_COURSE_FIRSTTIME, time1);
         values.put(COLUMN_COURSE_SECONDTIME, time2);
 
-
-
         sqLiteDatabase.update(COURSE_TABLE_NAME, values, COLUMN_COURSE_CODE + "=" + Ccode, null);
-
+        sqLiteDatabase.close();
     }
 
 

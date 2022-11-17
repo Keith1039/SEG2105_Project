@@ -34,8 +34,12 @@ public class InstructorEditCourseActivity extends AppCompatActivity implements A
     Spinner second, dropdown, capacity;
     TextView Professor;
     DBHandler db;
-    String cap;
+    String cap, oldCode;
     String time1, time2;
+    ArrayAdapter<String> adapter;
+    ArrayAdapter<String> ada;
+
+
     String[] items = new String[]{"8:00","9:00","10:00","11:00","12:00","1:00","2:00","3:00","4:00","5:00","6:00","7:00"};
     String[] sizes = new String[]{"50", "100", "150", "200", "250", "300"};
 
@@ -60,20 +64,51 @@ public class InstructorEditCourseActivity extends AppCompatActivity implements A
         db = new DBHandler(this);
 
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, items);
+        adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, items);
         dropdown.setAdapter(adapter);
         second.setAdapter(adapter);
 
-        ArrayAdapter<String> ada = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, sizes);
+        ada = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, sizes);
         capacity.setAdapter(ada);
 
         Intent intent = getIntent();
-        String oldCode = intent.getStringExtra("CCode");
+        oldCode = intent.getStringExtra("CCode");
         String oldName = intent.getStringExtra("CName");
         String prof = intent.getStringExtra("profName");
 
+        Cursor cursor = db.getSpecificData(oldCode);
+
+        if (cursor != null)
+        {
+            if(cursor.moveToFirst())
+            {
+                String cday1 = cursor.getString(3);
+                String cday2 = cursor.getString(4);
+                String ct1 = cursor.getString(5);
+                String ct2 = cursor.getString(6);
+                String cdesc = cursor.getString(7);
+                String ccap = cursor.getString(8);
 
 
+                firstDay.setText(cday1);
+                secondDay.setText(cday2);
+                CDesc.setText(cdesc);
+
+
+                int sel = adapter.getPosition(ccap);
+                capacity.setSelection(sel);
+
+                int ft = ada.getPosition(ct1);
+                dropdown.setSelection(ft);
+
+                int st = ada.getPosition(ct2);
+                second.setSelection(st);
+
+            }
+        }
+
+
+        //sets the text when we enter the edit page
         Professor.setText(prof);
         Cname.setText(oldName);
         Ccode.setText(oldCode);
@@ -82,6 +117,7 @@ public class InstructorEditCourseActivity extends AppCompatActivity implements A
         capacity.setOnItemSelectedListener(this);
         dropdown.setOnItemSelectedListener(this);
         second.setOnItemSelectedListener(this);
+
 
         update.setOnClickListener(
                 new View.OnClickListener(){
@@ -97,6 +133,7 @@ public class InstructorEditCourseActivity extends AppCompatActivity implements A
 
                         }else {
                             db.updateCourse(oldCode, CCode, CName, prof, day1, day2, desc, Integer.parseInt(cap), time1, time2);
+                            Toast.makeText(InstructorEditCourseActivity.this, "Successfully updated this course", Toast.LENGTH_SHORT).show();
                             finish();
                         }
                     }
@@ -108,15 +145,11 @@ public class InstructorEditCourseActivity extends AppCompatActivity implements A
                 new View.OnClickListener(){
                     public void onClick(View view){
                         db.updateCourse(oldCode, oldCode, oldName, "", "", "", "", 0, "", "");
+                        Toast.makeText(InstructorEditCourseActivity.this, "You are no longer the professor of this course", Toast.LENGTH_SHORT).show();
                         finish();
                     }
                 }
         );
-
-
-
-
-
 
     }
 
@@ -135,5 +168,6 @@ public class InstructorEditCourseActivity extends AppCompatActivity implements A
     public void onNothingSelected(AdapterView<?> adapterView) {
 
     }
+
 }
 
