@@ -1,16 +1,10 @@
 package com.example.project;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.os.Parcel;
-import android.os.Parcelable;
-
-import java.io.Serializable;
 
 public class DBHandler extends SQLiteOpenHelper{
 
@@ -31,7 +25,7 @@ public class DBHandler extends SQLiteOpenHelper{
     private static final String COLUMN_COURSE_CAPACITY = "courseCapacity";
 
     private static final String DATABASE_NAME = "university.db";
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
 
     public DBHandler(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -188,12 +182,12 @@ public class DBHandler extends SQLiteOpenHelper{
     //given a course code  find it in the database and delete it
     public boolean deleteCourse(String courseCode){
 
-        boolean result = false;
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
 
         String query = "SELECT * FROM " + COURSE_TABLE_NAME + " WHERE " + COLUMN_COURSE_CODE + " =\"" + courseCode + "\"";
         Cursor cursor = sqLiteDatabase.rawQuery(query, null);
 
+        boolean result = false;
         if(cursor.moveToFirst()){
             String courseStr = cursor.getString(0);
             sqLiteDatabase.delete(COURSE_TABLE_NAME, COLUMN_COURSE_CODE + " = \"" + courseStr + "\"",  null);
@@ -205,9 +199,22 @@ public class DBHandler extends SQLiteOpenHelper{
     }
 
     // update a course
-    public boolean updateCourse(){
-        return true ;
+    public void updateCourse(String oldCourseCode, String newCourseCode, String courseName, String instructor, String days, String hours, String description, int capacity){
+
+        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        values.put(COLUMN_COURSE_CODE, newCourseCode);
+        values.put(COLUMN_COURSE_NAME, courseName);
+        values.put(COLUMN_COURSE_INSTRUCTOR, instructor);
+        values.put(COLUMN_COURSE_DAYS, days);
+        values.put(COLUMN_COURSE_HOURS, hours);
+        values.put(COLUMN_COURSE_DESCRIPTION, description);
+        values.put(COLUMN_COURSE_CAPACITY, capacity);
+
+        sqLiteDatabase.update(COURSE_TABLE_NAME, values, COLUMN_COURSE_CODE + "=" + oldCourseCode, null);
     }
+
 
 }
 

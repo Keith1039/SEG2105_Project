@@ -4,11 +4,12 @@ public class Course {
     private String code;
     private String name;
 
-    private Instructor prof;
+    private String  prof;
     private String description;
     private int capacity;
     private String days;
-    private int[] hours;
+    private String hours;
+
 
     public Course(String code, String name) {
         this.code = code;
@@ -32,11 +33,11 @@ public class Course {
         this.name = name;
     }
 
-    public Instructor getProf() {
+    public String getProf() {
         return prof;
     }
 
-    public void setProf(Instructor prof) {
+    public void setProf(String prof) {
         this.prof = prof;
     }
 
@@ -64,11 +65,11 @@ public class Course {
         this.days = days;
     }
 
-    public int[] getHours() {
+    public String getHours() {
         return hours;
     }
 
-    public void setHours(int[] hours) {
+    public void setHours(String hours) {
         this.hours = hours;
     }
 }
