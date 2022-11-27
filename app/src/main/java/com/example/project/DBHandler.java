@@ -33,6 +33,7 @@ public class DBHandler extends SQLiteOpenHelper{
     private static final String COLUMN_COURSE_SECONDTIME = "courseTime2";
     private static final String COLUMN_COURSE_DESCRIPTION = "courseDescription";
     private static final String COLUMN_COURSE_CAPACITY = "courseCapacity";
+    private static final String COLUMN_COURSE_CURRENT_CAP = "currentCap";
 
     private static final String DATABASE_NAME = "university.db";
     private static final int DATABASE_VERSION = 3;
@@ -61,7 +62,8 @@ public class DBHandler extends SQLiteOpenHelper{
                 COLUMN_COURSE_FIRSTTIME + " varchar(100), "+
                 COLUMN_COURSE_SECONDTIME + " varchar(100), "+
                 COLUMN_COURSE_DESCRIPTION + " varchar(100), " +
-                COLUMN_COURSE_CAPACITY + " int)"
+                COLUMN_COURSE_CAPACITY + "int, " +
+                COLUMN_COURSE_CURRENT_CAP + " int)"
                 ;
 
         sqLiteDatabase.execSQL(create_course_table_cmd);

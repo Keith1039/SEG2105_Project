@@ -30,4 +30,7 @@
     <string name="display_course">display course</string>
     <string name="update">update</string>
     <string name="display_courses">Display Courses</string>
+    <string name="display_all_courses">Display All Courses</string>
+    <string name="display_my_courses">Display My Courses</string>
+    <string name="edit_course_status">Edit Course Status</string>
 </resources>
