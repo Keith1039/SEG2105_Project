@@ -129,7 +129,7 @@ public class InstructorEditCourseActivity extends AppCompatActivity implements A
                             Toast.makeText(InstructorEditCourseActivity.this, "Please enter a response for all available text boxes", Toast.LENGTH_SHORT).show();
 
                         }else {
-                            db.updateCourse(oldCode, CCode, CName, prof, day1, day2, desc, Integer.parseInt(cap), time1, time2);
+                            db.updateCourse(oldCode, CCode, CName, prof, day1, day2, desc, Integer.parseInt(cap), time1, time2, Integer.parseInt(cap));
                             Toast.makeText(InstructorEditCourseActivity.this, "Successfully updated this course", Toast.LENGTH_SHORT).show();
                             finish();
                         }
@@ -141,7 +141,7 @@ public class InstructorEditCourseActivity extends AppCompatActivity implements A
         leave.setOnClickListener(
                 new View.OnClickListener(){
                     public void onClick(View view){
-                        db.updateCourse(oldCode, oldCode, oldName, "", "", "", "", 0, "", "");
+                        db.updateCourse(oldCode, oldCode, oldName, "", "", "", "", 0, "", "", 0);
                         Toast.makeText(InstructorEditCourseActivity.this, "You are no longer the professor of this course", Toast.LENGTH_SHORT).show();
                         finish();
                     }

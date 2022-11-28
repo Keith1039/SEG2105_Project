@@ -25,6 +25,11 @@ public class DBHandler extends SQLiteOpenHelper{
     private static final String COURSE_TABLE_NAME = "courses";
     private static final String COLUMN_COURSE_CODE = "courseCode";
     private static final String COLUMN_COURSE_NAME = "courseName";
+    private static final String COLUMN_COURSE_ONE = "course1";
+    private static final String COLUMN_COURSE_TWO = "course2";
+    private static final String COLUMN_COURSE_THREE = "course3";
+    private static final String COLUMN_COURSE_FOUR = "course4";
+    private static final String COLUMN_COURSE_FIVE = "course5";
     //additional information about the course table
     private static final String COLUMN_COURSE_INSTRUCTOR = "courseInstructor";
     private static final String COLUMN_COURSE_FIRSTDAY = "courseDay1";
@@ -36,7 +41,7 @@ public class DBHandler extends SQLiteOpenHelper{
     private static final String COLUMN_COURSE_CURRENT_CAP = "currentCap";
 
     private static final String DATABASE_NAME = "university.db";
-    private static final int DATABASE_VERSION = 3;
+    private static final int DATABASE_VERSION = 4;
 
     public DBHandler(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -48,7 +53,12 @@ public class DBHandler extends SQLiteOpenHelper{
         // Create the user table
         String create_user_table_cmd = "CREATE TABLE " + USER_TABLE_NAME +
                 "(" + COLUMN_ID + " varchar(20) PRIMARY KEY, " +
-                COLUMN_PASSWORD + " varchar(20))";
+                COLUMN_PASSWORD + " varchar(20), "+
+                COLUMN_COURSE_ONE + " varchar(100), " +
+                COLUMN_COURSE_TWO + " varchar(100), "+
+                COLUMN_COURSE_THREE + " varchar(100), "+
+                COLUMN_COURSE_FOUR + " varchar(100), "+
+                COLUMN_COURSE_FIVE + " varchar(100))";
 
         //Columns Username, Password, Course[1-5]
         //Course columns store Course Codes
@@ -139,10 +149,11 @@ public class DBHandler extends SQLiteOpenHelper{
     }
 
 
-    public void updateCourse(String Ccode, String CCode, String CName, String PName, String day1, String day2, String desc, int Capacity, String time1, String time2){
+    public void updateCourse(String Ccode, String CCode, String CName, String PName, String day1, String day2, String desc, int Capacity, String time1, String time2, int ccap){
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
         ContentValues values = new ContentValues();
 
+        //Ccode == current code, CCode == desired code
         values.put(COLUMN_COURSE_NAME, CName);
         values.put(COLUMN_COURSE_CODE, CCode);
         values.put(COLUMN_COURSE_INSTRUCTOR, PName);
@@ -152,11 +163,71 @@ public class DBHandler extends SQLiteOpenHelper{
         values.put(COLUMN_COURSE_SECONDDAY, day2);
         values.put(COLUMN_COURSE_FIRSTTIME, time1);
         values.put(COLUMN_COURSE_SECONDTIME, time2);
+        values.put(COLUMN_COURSE_CURRENT_CAP, ccap);
 
         sqLiteDatabase.update(COURSE_TABLE_NAME, values, COLUMN_COURSE_CODE + "=" + Ccode, null);
         sqLiteDatabase.close();
     }
 
+    public boolean enroll(String CCode, String username){
+        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        String query = "SELECT * FROM " + USER_TABLE_NAME + " WHERE " + COLUMN_ID + " =\"" + username + "\"";
+        Cursor cursor = sqLiteDatabase.rawQuery(query, null);
+        boolean passed = false;
+
+        //need it to go through current courses
+        //check for empty spot
+        //place value in first empty spot
+        //return false if no spots available
+
+        int index = 0;
+
+        //Start at column 2, go to end
+        //looks for first available spot
+        //Stores the index of that spot in spot
+        if(cursor != null){
+            if(cursor.moveToFirst()){
+                for(int i = 2; i<=6; i++){
+                    if(cursor.getString(i) == null){
+                        index = i;
+                        passed = true;
+                        break;
+                    }
+                }
+            }
+        }
+
+        //depending on the index, that is where the course will be inserted
+        switch(index){
+            case 2:
+                values.put(COLUMN_COURSE_ONE, CCode);
+                sqLiteDatabase.update(USER_TABLE_NAME, values, COLUMN_ID + "= \"" + username + " \"" ,null);
+                break;
+            case 3:
+                values.put(COLUMN_COURSE_TWO, CCode);
+                sqLiteDatabase.update(USER_TABLE_NAME, values, COLUMN_ID + "= \"" + username + " \"" ,null);
+                break;
+            case 4:
+                values.put(COLUMN_COURSE_THREE, CCode);
+                sqLiteDatabase.update(USER_TABLE_NAME, values, COLUMN_ID + "= \"" + username + " \"" ,null);
+                break;
+            case 5:
+                values.put(COLUMN_COURSE_FOUR, CCode);
+                sqLiteDatabase.update(USER_TABLE_NAME, values, COLUMN_ID + "= \"" + username + " \"" ,null);
+                break;
+            case 6:
+                values.put(COLUMN_COURSE_FIVE, CCode);
+                sqLiteDatabase.update(USER_TABLE_NAME, values, COLUMN_ID + "= \"" + username + " \"" ,null);
+                break;
+            default:
+                break;
+        }
+
+        sqLiteDatabase.close();
+        return passed;
+
+    }
 
 
     //add a new course in the table courses in the data base

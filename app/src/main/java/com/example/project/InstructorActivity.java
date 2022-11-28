@@ -62,8 +62,6 @@ public class InstructorActivity extends AppCompatActivity implements Serializabl
 
 
 
-
-
         //find course by course code and course name
         search.setOnClickListener(
                 new View.OnClickListener() {

@@ -41,6 +41,8 @@ public class StudentActivity extends AppCompatActivity {
             }
         }
 
+
+
         course_code = (EditText) findViewById(R.id.courseCode);
         course_name = (EditText) findViewById(R.id.courseName);
         course_ListView = (ListView) findViewById(R.id.view_list_courses);
@@ -50,6 +52,7 @@ public class StudentActivity extends AppCompatActivity {
         display = (Button) findViewById(R.id.all_courses);
 
         dbHandler = new DBHandler(this);
+        String userName = intent.getStringExtra("usernameEditText");
 
 
 
@@ -61,6 +64,23 @@ public class StudentActivity extends AppCompatActivity {
                         // Fetch all courses from database and display them
                         viewCourses();
 
+                    }
+                }
+        );
+
+
+        enroll.setOnClickListener(
+                new View.OnClickListener(){
+                    @Override
+                    public void onClick(View view){
+                        String courseCode = course_code.getText().toString();
+                        boolean success = enroll(courseCode, userName);
+
+                        if(success){
+                            Toast.makeText(StudentActivity.this, "You have successfully enrolled", Toast.LENGTH_SHORT).show();
+                        }else{
+                            Toast.makeText(StudentActivity.this, "An error occurred, you may be enrolled in too many classes", Toast.LENGTH_SHORT).show();
+                        }
                     }
                 }
         );
@@ -83,20 +103,28 @@ public class StudentActivity extends AppCompatActivity {
         course_ListView.setAdapter(adapter);
     }
 
-    //viewMyCourse()
-    //Should check all the course columns and search for all the courses in the course table
-    //Then should return all resulting courses
-
-
-    //enroll(CCode)
+    //enroll(CCode, username)
     //Takes the course code, looks for it in the courses table
     //If it exists, check that it's time does not conflict with other courses already in the list
     //otherwise return an error
     //Then add it to the course list of the user table (first available course slot)
     //If too many courses are already added (5 course slots are already filled) return an error
+    private boolean enroll(String CCode, String username){
+        dbHandler = new DBHandler(this);
+        return dbHandler.enroll(CCode, username);
+    }
+
+
+
 
     //unenroll(CCode)
     //Takes the course code and looks for it in the user's list
     //if it exists, remove it from the user's list
     //otherwise return an error
+
+    //viewMyCourse()
+    //Should check all the course columns and search for all the courses in the course table
+    //Then should return all resulting courses
+
+
 }
