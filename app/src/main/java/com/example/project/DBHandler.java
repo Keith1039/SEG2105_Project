@@ -50,6 +50,10 @@ public class DBHandler extends SQLiteOpenHelper{
                 "(" + COLUMN_ID + " varchar(20) PRIMARY KEY, " +
                 COLUMN_PASSWORD + " varchar(20))";
 
+        //Columns Username, Password, Course[1-5]
+        //Course columns store Course Codes
+        //When we need to view our courses, we do a lookup of the codes in the user's row
+
         sqLiteDatabase.execSQL(create_user_table_cmd);
 
         //Create the courses table
@@ -103,6 +107,9 @@ public class DBHandler extends SQLiteOpenHelper{
 
         return cursor;
     }
+
+
+    //Add my course
 
 
     //add a new user in the table users in the data base
