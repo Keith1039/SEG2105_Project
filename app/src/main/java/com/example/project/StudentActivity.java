@@ -17,7 +17,7 @@ import java.util.ArrayList;
 
 public class StudentActivity extends AppCompatActivity {
     Button search;
-    Button edit;
+    Button enroll, unenroll;
     Button display;
 
     EditText course_code, course_name;
@@ -45,7 +45,8 @@ public class StudentActivity extends AppCompatActivity {
         course_name = (EditText) findViewById(R.id.courseName);
         course_ListView = (ListView) findViewById(R.id.view_list_courses);
         search = (Button) findViewById(R.id.my_courses);
-        edit = (Button) findViewById(R.id.course_status);
+        enroll = (Button) findViewById(R.id.enroll);
+        unenroll = (Button) findViewById(R.id.unenroll);
         display = (Button) findViewById(R.id.all_courses);
 
         dbHandler = new DBHandler(this);
@@ -81,4 +82,21 @@ public class StudentActivity extends AppCompatActivity {
         adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1,course_List);
         course_ListView.setAdapter(adapter);
     }
+
+    //viewMyCourse()
+    //Should check all the course columns and search for all the courses in the course table
+    //Then should return all resulting courses
+
+
+    //enroll(CCode)
+    //Takes the course code, looks for it in the courses table
+    //If it exists, check that it's time does not conflict with other courses already in the list
+    //otherwise return an error
+    //Then add it to the course list of the user table (first available course slot)
+    //If too many courses are already added (5 course slots are already filled) return an error
+
+    //unenroll(CCode)
+    //Takes the course code and looks for it in the user's list
+    //if it exists, remove it from the user's list
+    //otherwise return an error
 }

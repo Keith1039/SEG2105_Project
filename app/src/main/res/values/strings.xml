@@ -33,4 +33,6 @@
     <string name="display_all_courses">Display All Courses</string>
     <string name="display_my_courses">Display My Courses</string>
     <string name="edit_course_status">Edit Course Status</string>
+    <string name="enroll">Enroll</string>
+    <string name="unenroll">Unenroll</string>
 </resources>
