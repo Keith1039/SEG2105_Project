@@ -138,19 +138,29 @@ public class StudentActivity extends AppCompatActivity {
                 Toast.makeText(StudentActivity.this, "Course list is full", Toast.LENGTH_SHORT).show();
                 break;
             case 2:
-                dbHandler.enroll(CCode, username, "course1");
+                if(checkNoConflicts(CCode, username)) {
+                    dbHandler.enroll(CCode, username, "course1");
+                }
                 break;
             case 3:
-                dbHandler.enroll(CCode, username, "course2");
+                if(checkNoConflicts(CCode, username)) {
+                    dbHandler.enroll(CCode, username, "course2");
+                }
                 break;
             case 4:
-                dbHandler.enroll(CCode, username, "course3");
+                if(checkNoConflicts(CCode, username)) {
+                    dbHandler.enroll(CCode, username, "course3");
+                }
                 break;
             case 5:
-                dbHandler.enroll(CCode, username, "course4");
+                if(checkNoConflicts(CCode, username)) {
+                    dbHandler.enroll(CCode, username, "course4");
+                }
                 break;
             case 6:
-                dbHandler.enroll(CCode, username, "course5");
+                if(checkNoConflicts(CCode, username)) {
+                    dbHandler.enroll(CCode, username, "course5");
+                }
                 break;
         }
 
@@ -162,22 +172,67 @@ public class StudentActivity extends AppCompatActivity {
 
     public boolean checkNoConflicts(String code, String username){
         dbHandler = new DBHandler(this);
+        Cursor courses;
+        Cursor user = dbHandler.getSpecificUser(username);
 
         //make this default false
-        boolean result = true;
-
-        Cursor courses = dbHandler.getSpecificData(code);
-        Cursor user = dbHandler.getSpecificUser(username);
-        //index 5 and 6 have the course times in the courses cursor
-        Cursor cursor;
-
+        boolean result = false;
+        boolean firstDay = false;
+        boolean secondDay = false;
+        String day1 = null;
+        String day2 = null;
         String firstTime = null;
         String secondTime = null;
 
-        if(courses != null) {
-            if (courses.moveToFirst()) {
+        //first get the days and times offered by the course we want (3,4,5,6)
+        //then get the days and times of all the courses currently enrolled in
+        //then compare the two
+
+        //this will initialize the variables for the course we want
+        courses = dbHandler.getSpecificData(code);
+        if(courses != null){
+            if(courses.moveToFirst()){
+                day1 = courses.getString(3);
+                day2 = courses.getString(4);
                 firstTime = courses.getString(5);
                 secondTime = courses.getString(6);
+            }
+        }
+
+        //first loop through courses in user
+        for(int i =2; i<=6; i++){
+            //now get each of the courses stored and call getDays() from dbHandler on them
+            String temp = dbHandler.getDay(user.getString(i), 3);
+            String temp2 = dbHandler.getDay(user.getString(i), 4);
+
+            //now check day1 != temp or temp2
+            //then check day2 != temp or temp2
+            if(!day1.equals(temp) || !day1.equals(temp2)){
+                return true;
+            }else if(!day2.equals(temp) || !day2.equals(temp2)){
+                return true;
+            }
+        }
+
+        //if it passes through then we know we have some duplicate days
+
+
+        //then if one or more days are the same then
+        //loop through the user's current courses
+        //call the getTime() function of dbHandler
+        //compare the result to the stored times (but only check for the days that are the same)
+
+        for(int i =2; i<=6; i++){
+            //now get each of the courses stored and call getDays() from dbHandler on them
+            String temp = dbHandler.getTime(user.getString(i), 5);
+            String temp2 = dbHandler.getTime(user.getString(i), 6);
+
+            //now check day1 != temp or temp2
+            //then check day2 != temp or temp2
+            if(!firstTime.equals(temp) || !firstTime.equals(temp2)){
+                return true;
+            }else if(!secondTime.equals(temp) || !secondTime.equals(temp2)){
+                return true;
             }
         }
 
@@ -185,6 +240,8 @@ public class StudentActivity extends AppCompatActivity {
         return result;
 
     }
+
+
 
 
     //unenroll(CCode)

@@ -128,6 +128,39 @@ public class DBHandler extends SQLiteOpenHelper{
         return cursor;
     }
 
+    public String getDay(String code, int day){
+        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+
+        String query = "SELECT * FROM " + COURSE_TABLE_NAME + " WHERE " + COLUMN_COURSE_CODE + " =\"" + code + "\"";
+        Cursor cursor = sqLiteDatabase.rawQuery(query, null);
+
+        String out;
+        if(cursor !=  null){
+            if(cursor.moveToFirst()){
+                out = cursor.getString(day);
+            }
+        }
+
+        return out;
+
+    }
+
+    public String getTime(String code, int timeSlot){
+        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+
+        String query = "SELECT * FROM " + COURSE_TABLE_NAME + " WHERE " + COLUMN_COURSE_CODE + " =\"" + code + "\"";
+        Cursor cursor = sqLiteDatabase.rawQuery(query, null);
+
+        String out;
+        if(cursor !=  null){
+            if(cursor.moveToFirst()){
+                out = cursor.getString(timeSlot);
+            }
+        }
+
+        return out;
+    }
+
 
     //add a new user in the table users in the data base
     public void addUsers(User user) {
