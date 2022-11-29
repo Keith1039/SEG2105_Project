@@ -237,10 +237,8 @@ public class StudentActivity extends AppCompatActivity {
 
             //now check day1 != temp or temp2
             //then check day2 != temp or temp2
-            if(!firstTime.equals(temp) || !firstTime.equals(temp2)){
-                return true;
-            }else if(!secondTime.equals(temp) || !secondTime.equals(temp2)){
-                return true;
+            if( (!firstTime.equals(temp) || !firstTime.equals(temp2)) && (!secondTime.equals(temp) || !secondTime.equals(temp2))){
+             result = true;
             }
         }
 
