@@ -185,12 +185,12 @@ public class DBHandler extends SQLiteOpenHelper{
         String query = "SELECT * FROM " + USER_TABLE_NAME + " WHERE " + COLUMN_ID + " =\"" + username + "\"";
         Cursor cursor = sqLiteDatabase.rawQuery(query, null);
 
-
+        //Check times my course is offered vs Times all my current courses are taking
 
 
         //this is where the value gets staged to get updated
         values.put(column, code);
-        //this is where the update occurs, all checks must happen before this 
+        //this is where the update occurs, all checks must happen before this
         sqLiteDatabase.update(USER_TABLE_NAME, values, COLUMN_ID + "= \"" + username + "\"", null);
         sqLiteDatabase.close();
 
@@ -311,6 +311,18 @@ public class DBHandler extends SQLiteOpenHelper{
         }
         sqLiteDatabase.close();
         return result;
+    }
+
+    public void deleteClass(String username,  String column){
+
+        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        values.put(column, "");
+        sqLiteDatabase.update(USER_TABLE_NAME, values, COLUMN_ID + "= \"" + username + "\"", null);
+        sqLiteDatabase.close();
+
+
     }
 
     public boolean isProf(String CCode, String provided){

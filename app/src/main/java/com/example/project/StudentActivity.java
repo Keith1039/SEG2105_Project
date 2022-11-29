@@ -86,7 +86,8 @@ public class StudentActivity extends AppCompatActivity {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Toast.makeText(StudentActivity.this, "Unenrolling", Toast.LENGTH_SHORT).show();
+                        String code = course_code.getText().toString();
+                        unenroll(code, userName);
 
                     }
                 }
@@ -123,7 +124,7 @@ public class StudentActivity extends AppCompatActivity {
         for(int i = 2; i<=6; i++){
             if(cursor != null){
                 if(cursor.moveToFirst()){
-                    if(cursor.isNull(i)){
+                    if(cursor.isNull(i) || cursor.getString(i).equals("")){
                         index = i;
                         break;
                     }
@@ -151,6 +152,11 @@ public class StudentActivity extends AppCompatActivity {
             case 6:
                 dbHandler.enroll(CCode, username, "course5");
                 break;
+        }
+
+        Log.d("First", cursor.getString(2));
+        if(cursor.getString(3) != null) {
+            Log.d("Second", cursor.getString(3));
         }
     }
 
@@ -185,6 +191,56 @@ public class StudentActivity extends AppCompatActivity {
     //Takes the course code and looks for it in the user's list
     //if it exists, remove it from the user's list
     //otherwise return an error
+    //COMPLETE
+    public void unenroll(String CCode, String username){
+        dbHandler = new DBHandler(this);
+        //takes those parameters and sends them to DBHandler to get processed
+        //now check if successful or not
+        Cursor cursor = dbHandler.getSpecificUser(username);
+
+        int index = 0;
+
+        for(int i = 2; i<=6; i++){
+            if(cursor != null){
+                if(cursor.moveToFirst()){
+                    if(cursor.getString(i).equals(CCode)){
+                        index = i;
+                        break;
+                    }
+                }
+            }
+        }
+
+        switch(index){
+            case 0:
+                Toast.makeText(StudentActivity.this, "Course list is full", Toast.LENGTH_SHORT).show();
+                break;
+            case 2:
+                dbHandler.deleteClass(username, "course1");
+                break;
+            case 3:
+                dbHandler.deleteClass(username, "course2");
+                break;
+            case 4:
+                dbHandler.deleteClass(username, "course3");
+                break;
+            case 5:
+                dbHandler.deleteClass(username, "course4");
+                break;
+            case 6:
+                dbHandler.deleteClass(username, "course5");
+                break;
+        }
+    }
+
+
+
+
+
+
+
+
+
 
     //viewMyCourse()
     //Should check all the course columns and search for all the courses in the course table
