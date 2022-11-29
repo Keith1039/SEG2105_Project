@@ -10,6 +10,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Log;
+import java.util.*;
 
 import java.io.Serializable;
 import java.util.Observer;
@@ -41,7 +42,7 @@ public class DBHandler extends SQLiteOpenHelper{
     private static final String COLUMN_COURSE_CURRENT_CAP = "currentCap";
 
     private static final String DATABASE_NAME = "university.db";
-    private static final int DATABASE_VERSION = 4;
+    private static final int DATABASE_VERSION = 5;
 
     public DBHandler(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -118,8 +119,14 @@ public class DBHandler extends SQLiteOpenHelper{
         return cursor;
     }
 
+    public Cursor getSpecificUser(String username){
+        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
 
-    //Add my course
+        String query = "SELECT * FROM " + USER_TABLE_NAME + " WHERE " + COLUMN_ID + " =\"" + username + "\"";
+        Cursor cursor = sqLiteDatabase.rawQuery(query, null);
+
+        return cursor;
+    }
 
 
     //add a new user in the table users in the data base
@@ -169,65 +176,38 @@ public class DBHandler extends SQLiteOpenHelper{
         sqLiteDatabase.close();
     }
 
-    public boolean enroll(String CCode, String username){
+
+    //returns true if it enrolled
+    //false otherwise
+    public boolean enroll(String code, String username, String column){
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         String query = "SELECT * FROM " + USER_TABLE_NAME + " WHERE " + COLUMN_ID + " =\"" + username + "\"";
         Cursor cursor = sqLiteDatabase.rawQuery(query, null);
-        boolean passed = false;
 
-        //need it to go through current courses
-        //check for empty spot
-        //place value in first empty spot
-        //return false if no spots available
 
-        int index = 0;
 
-        //Start at column 2, go to end
-        //looks for first available spot
-        //Stores the index of that spot in spot
-        if(cursor != null){
-            if(cursor.moveToFirst()){
-                for(int i = 2; i<=6; i++){
-                    if(cursor.getString(i) == null){
-                        index = i;
-                        passed = true;
-                        break;
-                    }
-                }
-            }
-        }
 
-        //depending on the index, that is where the course will be inserted
-        switch(index){
-            case 2:
-                values.put(COLUMN_COURSE_ONE, CCode);
-                sqLiteDatabase.update(USER_TABLE_NAME, values, COLUMN_ID + "= \"" + username + " \"" ,null);
-                break;
-            case 3:
-                values.put(COLUMN_COURSE_TWO, CCode);
-                sqLiteDatabase.update(USER_TABLE_NAME, values, COLUMN_ID + "= \"" + username + " \"" ,null);
-                break;
-            case 4:
-                values.put(COLUMN_COURSE_THREE, CCode);
-                sqLiteDatabase.update(USER_TABLE_NAME, values, COLUMN_ID + "= \"" + username + " \"" ,null);
-                break;
-            case 5:
-                values.put(COLUMN_COURSE_FOUR, CCode);
-                sqLiteDatabase.update(USER_TABLE_NAME, values, COLUMN_ID + "= \"" + username + " \"" ,null);
-                break;
-            case 6:
-                values.put(COLUMN_COURSE_FIVE, CCode);
-                sqLiteDatabase.update(USER_TABLE_NAME, values, COLUMN_ID + "= \"" + username + " \"" ,null);
-                break;
-            default:
-                break;
-        }
-
+        //this is where the value gets staged to get updated
+        values.put(column, code);
+        //this is where the update occurs, all checks must happen before this 
+        sqLiteDatabase.update(USER_TABLE_NAME, values, COLUMN_ID + "= \"" + username + "\"", null);
         sqLiteDatabase.close();
-        return passed;
 
+
+
+        return true;
     }
+
+
+
+
+
+
+
+
+
+
 
 
     //add a new course in the table courses in the data base

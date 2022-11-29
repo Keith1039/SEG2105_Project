@@ -3,6 +3,7 @@ package com.example.project;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -73,14 +74,20 @@ public class StudentActivity extends AppCompatActivity {
                 new View.OnClickListener(){
                     @Override
                     public void onClick(View view){
-                        String courseCode = course_code.getText().toString();
-                        boolean success = enroll(courseCode, userName);
+                        String code = course_code.getText().toString();
 
-                        if(success){
-                            Toast.makeText(StudentActivity.this, "You have successfully enrolled", Toast.LENGTH_SHORT).show();
-                        }else{
-                            Toast.makeText(StudentActivity.this, "An error occurred, you may be enrolled in too many classes", Toast.LENGTH_SHORT).show();
-                        }
+                        //takes the course code and username and sends it to the enroll() method
+                        enroll(code, userName);
+                    }
+                }
+        );
+
+        unenroll.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Toast.makeText(StudentActivity.this, "Unenrolling", Toast.LENGTH_SHORT).show();
+
                     }
                 }
         );
@@ -104,17 +111,74 @@ public class StudentActivity extends AppCompatActivity {
     }
 
     //enroll(CCode, username)
-    //Takes the course code, looks for it in the courses table
-    //If it exists, check that it's time does not conflict with other courses already in the list
-    //otherwise return an error
-    //Then add it to the course list of the user table (first available course slot)
-    //If too many courses are already added (5 course slots are already filled) return an error
-    private boolean enroll(String CCode, String username){
+    public void enroll(String CCode, String username){
         dbHandler = new DBHandler(this);
-        return dbHandler.enroll(CCode, username);
+        //takes those parameters and sends them to DBHandler to get processed
+        //now check if successful or not
+        Cursor cursor = dbHandler.getSpecificUser(username);
+
+        int index = 0;
+
+        //looking for first empty position
+        for(int i = 2; i<=6; i++){
+            if(cursor != null){
+                if(cursor.moveToFirst()){
+                    if(cursor.isNull(i)){
+                        index = i;
+                        break;
+                    }
+                }
+            }
+        }
+
+        //this will set the course to the course position we want in the db
+        switch(index){
+            case 0:
+                Toast.makeText(StudentActivity.this, "Course list is full", Toast.LENGTH_SHORT).show();
+                break;
+            case 2:
+                dbHandler.enroll(CCode, username, "course1");
+                break;
+            case 3:
+                dbHandler.enroll(CCode, username, "course2");
+                break;
+            case 4:
+                dbHandler.enroll(CCode, username, "course3");
+                break;
+            case 5:
+                dbHandler.enroll(CCode, username, "course4");
+                break;
+            case 6:
+                dbHandler.enroll(CCode, username, "course5");
+                break;
+        }
     }
 
+    public boolean checkNoConflicts(String code, String username){
+        dbHandler = new DBHandler(this);
 
+        //make this default false
+        boolean result = true;
+
+        Cursor courses = dbHandler.getSpecificData(code);
+        Cursor user = dbHandler.getSpecificUser(username);
+        //index 5 and 6 have the course times in the courses cursor
+        Cursor cursor;
+
+        String firstTime = null;
+        String secondTime = null;
+
+        if(courses != null) {
+            if (courses.moveToFirst()) {
+                firstTime = courses.getString(5);
+                secondTime = courses.getString(6);
+            }
+        }
+
+
+        return result;
+
+    }
 
 
     //unenroll(CCode)
