@@ -140,26 +140,36 @@ public class StudentActivity extends AppCompatActivity {
             case 2:
                 if(checkNoConflicts(CCode, username)) {
                     dbHandler.enroll(CCode, username, "course1");
+                }else{
+                    Toast.makeText(StudentActivity.this, "You have a time conflict", Toast.LENGTH_SHORT).show();
                 }
                 break;
             case 3:
                 if(checkNoConflicts(CCode, username)) {
                     dbHandler.enroll(CCode, username, "course2");
+                }else{
+                    Toast.makeText(StudentActivity.this, "You have a time conflict", Toast.LENGTH_SHORT).show();
                 }
                 break;
             case 4:
                 if(checkNoConflicts(CCode, username)) {
                     dbHandler.enroll(CCode, username, "course3");
+                }else{
+                    Toast.makeText(StudentActivity.this, "You have a time conflict", Toast.LENGTH_SHORT).show();
                 }
                 break;
             case 5:
                 if(checkNoConflicts(CCode, username)) {
                     dbHandler.enroll(CCode, username, "course4");
+                }else{
+                    Toast.makeText(StudentActivity.this, "You have a time conflict", Toast.LENGTH_SHORT).show();
                 }
                 break;
             case 6:
                 if(checkNoConflicts(CCode, username)) {
                     dbHandler.enroll(CCode, username, "course5");
+                }else{
+                    Toast.makeText(StudentActivity.this, "You have a time conflict", Toast.LENGTH_SHORT).show();
                 }
                 break;
         }
@@ -177,8 +187,6 @@ public class StudentActivity extends AppCompatActivity {
 
         //make this default false
         boolean result = false;
-        boolean firstDay = false;
-        boolean secondDay = false;
         String day1 = null;
         String day2 = null;
         String firstTime = null;
