@@ -1,0 +1,36 @@
+<resources>
+    <string name="app_name">Project</string>
+    <string name="admin_login">Admin Login</string>
+    <string name="username_hint">username</string>
+    <string name="password_hint">password</string>
+    <string name="login_btn">Login</string>
+    <string name="view_users">View Users</string>
+    <string name="admin_welcome">Welcome, Admin!</string>
+    <string name="view_courses">View Courses</string>
+    <string name="create_course">Create Course</string>
+    <string name="admin_login_btn">Login as Admin</string>
+    <string name="delete_user">Delete User</string>
+    <string name="enter_new_course_id">Enter New Course ID</string>
+    <string name="enter_new_course_name">Enter New Course Name</string>
+    <string name="done">Done</string>
+    <string name="textview">TextView</string>
+    <string name="new_course_id">New Course ID</string>
+    <string name="new_course_name">New Course Name</string>
+    <string name="update_course">update course</string>
+    <string name="create_user">Create User</string>
+    <string name="login_as_user">Login as User</string>
+    <string name="login_as_student">Login as Student</string>
+    <string name="login_as_instructor">Login as Instructor</string>
+    <string name="student_sign_up">Student Sign Up</string>
+    <string name="instructor_sign_up">Instructor Sign Up</string>
+    <string name="login">Login</string>
+    <string name="welcome_user">Welcome User!</string>
+    <string name="search">search</string>
+    <string name="edit">edit</string>
+    <string name="display_course">display course</string>
+    <string name="update">update</string>
+    <string name="display_courses">Display Courses</string>
+    <string name="display_all_courses">Display All Courses</string>
+    <string name="display_my_courses">Display My Courses</string>
+    <string name="edit_course_status">Edit Course Status</string>
+</resources>
