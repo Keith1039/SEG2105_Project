@@ -134,7 +134,7 @@ public class DBHandler extends SQLiteOpenHelper{
         String query = "SELECT * FROM " + COURSE_TABLE_NAME + " WHERE " + COLUMN_COURSE_CODE + " =\"" + code + "\"";
         Cursor cursor = sqLiteDatabase.rawQuery(query, null);
 
-        String out;
+        String out = "";
         if(cursor !=  null){
             if(cursor.moveToFirst()){
                 out = cursor.getString(day);
@@ -148,10 +148,11 @@ public class DBHandler extends SQLiteOpenHelper{
     public String getTime(String code, int timeSlot){
         SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
 
+
         String query = "SELECT * FROM " + COURSE_TABLE_NAME + " WHERE " + COLUMN_COURSE_CODE + " =\"" + code + "\"";
         Cursor cursor = sqLiteDatabase.rawQuery(query, null);
 
-        String out;
+        String out = "";
         if(cursor !=  null){
             if(cursor.moveToFirst()){
                 out = cursor.getString(timeSlot);
@@ -231,14 +232,6 @@ public class DBHandler extends SQLiteOpenHelper{
 
         return true;
     }
-
-
-
-
-
-
-
-
 
 
 

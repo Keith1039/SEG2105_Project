@@ -64,6 +64,7 @@ public class StudentActivity extends AppCompatActivity {
                     public void onClick(View view) {
                         // Fetch all courses from database and display them
                         viewCourses();
+                        //test();
 
                     }
                 }
@@ -92,6 +93,21 @@ public class StudentActivity extends AppCompatActivity {
                     }
                 }
         );
+
+    }
+
+
+    private void test(){
+        dbHandler = new DBHandler(this);
+
+        Cursor user = dbHandler.getSpecificUser("george123");
+
+        if(user != null){
+            if(user.moveToFirst()){
+                String out = user.getString(2);
+                Toast.makeText(StudentActivity.this, out, Toast.LENGTH_SHORT).show();
+            }
+        }
 
     }
 
@@ -182,68 +198,92 @@ public class StudentActivity extends AppCompatActivity {
 
     public boolean checkNoConflicts(String code, String username){
         dbHandler = new DBHandler(this);
-        Cursor courses;
-        Cursor user = dbHandler.getSpecificUser(username);
+        //get first and second times of course I want
+        //loop through student's courses and get those times
+        //compare the current used up times to the new times
 
-        //make this default false
-        boolean result = false;
-        String day1 = null;
-        String day2 = null;
-        String firstTime = null;
-        String secondTime = null;
-
-        //first get the days and times offered by the course we want (3,4,5,6)
-        //then get the days and times of all the courses currently enrolled in
-        //then compare the two
-
-        //this will initialize the variables for the course we want
-        courses = dbHandler.getSpecificData(code);
+        boolean out = true;
+        Cursor courses = dbHandler.getSpecificData(code);
+        String day1 = "";
+        String day2 = "";
+        String time1 = "";
+        String time2 = "";
+        //Stores the values for the course we want to add
         if(courses != null){
             if(courses.moveToFirst()){
                 day1 = courses.getString(3);
                 day2 = courses.getString(4);
-                firstTime = courses.getString(5);
-                secondTime = courses.getString(6);
+                time1 = courses.getString(5);
+                time2 = courses.getString(6);
             }
         }
 
-        //first loop through courses in user
-        for(int i =2; i<=6; i++){
-            //now get each of the courses stored and call getDays() from dbHandler on them
-            String temp = dbHandler.getDay(user.getString(i), 3);
-            String temp2 = dbHandler.getDay(user.getString(i), 4);
+        Cursor user = dbHandler.getSpecificUser(username);
+        //first loop will check first day and time
+        for(int i = 2; i<=6; i++){
+            if(user != null){
+                if(user.moveToFirst()){
+                    //contains the course code at index i
+                    String temp = user.getString(i);
 
-            //now check day1 != temp or temp2
-            //then check day2 != temp or temp2
-            if(!day1.equals(temp) || !day1.equals(temp2)){
-                return true;
-            }else if(!day2.equals(temp) || !day2.equals(temp2)){
-                return true;
+                    Cursor cursor1 = dbHandler.getSpecificData(temp);
+
+                    //contain the values of time and day 1 for the course at index i
+                    if(cursor1 != null) {
+                        if (cursor1.moveToFirst()) {
+                            String d1 = cursor1.getString(3);
+                            String t1 = cursor1.getString(5);
+
+
+                            if(d1 != null && t1 != null) {
+                                if (day1.equals(d1) && time1.equals(t1)) {
+                                    return false;
+                                }
+                            }
+
+
+                        }
+                    }
+
+
+
+                }
             }
         }
 
-        //if it passes through then we know we have some duplicate days
+        //this for loop will check the second day and time
+        for(int i = 2; i<=6; i++){
+            if(user != null){
+                if(user.moveToFirst()){
+                    //contains the course code at index i
+                    String temp = user.getString(i);
+                    Cursor cursor1 = dbHandler.getSpecificData(temp);
 
 
-        //then if one or more days are the same then
-        //loop through the user's current courses
-        //call the getTime() function of dbHandler
-        //compare the result to the stored times (but only check for the days that are the same)
+                    if(cursor1 != null) {
+                        if (cursor1.moveToFirst()) {
+                            //contain the values of time and day 2 for the course at index i
+                            String d2 = cursor1.getString(4);
+                            String t2 = cursor1.getString(6);
 
-        for(int i =2; i<=6; i++){
-            //now get each of the courses stored and call getDays() from dbHandler on them
-            String temp = dbHandler.getTime(user.getString(i), 5);
-            String temp2 = dbHandler.getTime(user.getString(i), 6);
 
-            //now check day1 != temp or temp2
-            //then check day2 != temp or temp2
-            if( (!firstTime.equals(temp) || !firstTime.equals(temp2)) && (!secondTime.equals(temp) || !secondTime.equals(temp2))){
-             result = true;
+                            if (d2 != null && t2 != null) {
+                                if (!day2.equals(d2) && !time2.equals(t2)) {
+                                    return false;
+                                }
+                            }
+
+
+                        }
+                    }
+
+
+
+                }
             }
         }
 
-
-        return result;
+        return out;
 
     }
 
