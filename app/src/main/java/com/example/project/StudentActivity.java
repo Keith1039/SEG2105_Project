@@ -189,11 +189,6 @@ public class StudentActivity extends AppCompatActivity {
                 }
                 break;
         }
-
-        Log.d("First", cursor.getString(2));
-        if(cursor.getString(3) != null) {
-            Log.d("Second", cursor.getString(3));
-        }
     }
 
     public boolean checkNoConflicts(String code, String username){
