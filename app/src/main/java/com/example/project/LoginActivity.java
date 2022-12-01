@@ -1,13 +1,13 @@
 package com.example.project;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
-import androidx.appcompat.app.AppCompatActivity;
 
 public class LoginActivity extends AppCompatActivity {
     EditText username;
@@ -50,19 +50,20 @@ public class LoginActivity extends AppCompatActivity {
                                 Intent intent = new Intent(LoginActivity.this, AdminActivity.class);
                                 startActivity(intent);
                             }
-                            //See if the username format match the student username format which is "adbcd123" and go to student page
-                            else if ((userName.matches("[a-z0-9]+"))){
-                                Intent intent = new Intent(LoginActivity.this, StudentActivity.class);
-                                intent.putExtra("usernameEditText", userName);
-                                startActivity(intent);
-
-                            }
                             else if ((userName.matches("[a-zA-Z]+"))== true){
                                 //See if the username format match the instructor username format which is "adbcd" and go to instructor  page
                                 Intent intent = new Intent(LoginActivity.this, InstructorActivity.class);
                                 intent.putExtra("usernameEditText", userName);
                                 startActivity(intent);
                             }
+                            //See if the username format match the student username format which is "adbcd123" and go to student page
+                            else if ((userName.matches("[a-z0-9]+"))==true ){
+                                Intent intent = new Intent(LoginActivity.this, StudentActivity.class);
+                                intent.putExtra("usernameEditText", userName);
+                                startActivity(intent);
+
+                            }
+
                         }
                         else {
                             //the user is not in the database prompt the correct message
